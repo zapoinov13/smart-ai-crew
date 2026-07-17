@@ -14,7 +14,7 @@ function Index() {
         {/* Headline */}
         <h1 className="text-center text-[32px] font-black leading-[1.05] tracking-tight sm:text-4xl">
           Построй свою{" "}
-          <span className="text-blue-600">AI-команду</span>{" "}
+          <span className="text-blue-600">AI команду</span>{" "}
           и перестань продавать своё время
         </h1>
         <p className="mt-3 text-center text-[13px] leading-tight text-neutral-700 whitespace-pre-line">
