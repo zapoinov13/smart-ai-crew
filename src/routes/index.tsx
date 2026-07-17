@@ -17,8 +17,9 @@ function Index() {
           <span className="text-blue-600">AI-команду</span>{" "}
           и перестань продавать своё время
         </h1>
-        <p className="mt-3 text-center text-[13px] leading-snug text-neutral-700">
-          За <span className="font-semibold">90 минут</span> покажу систему, которая делает контент, рекламу, сайты и CRM за тебя
+        <p className="mt-3 text-center text-[13px] leading-tight text-neutral-700 whitespace-pre-line">
+          За <span className="font-semibold">90 минут</span> покажу систему, которая делает{"\u00a0"}{"\n"}
+          контент завод, рекламу, сайты и CRM за тебя
         </p>
 
         {/* Badges */}
