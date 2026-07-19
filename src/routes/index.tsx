@@ -52,159 +52,212 @@ function Index() {
   };
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-white text-neutral-900">
-      <div className="mx-auto flex min-h-screen max-w-md flex-col px-5 pt-6 pb-6">
+    <main className="relative min-h-screen overflow-hidden bg-hero-radial font-sans text-white antialiased">
+      {/* Grid overlay */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-[0.07]"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)",
+          backgroundSize: "44px 44px",
+          maskImage: "radial-gradient(ellipse at 50% 30%, black 40%, transparent 75%)",
+        }}
+      />
+      {/* Noise */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-[0.05] mix-blend-overlay"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.7'/></svg>\")",
+        }}
+      />
+
+      <div className="relative mx-auto flex min-h-screen w-full max-w-[420px] flex-col px-5 pt-5 pb-6">
+        {/* Top bar */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="grid h-8 w-8 place-items-center rounded-lg bg-white/5 ring-1 ring-white/10 backdrop-blur">
+              <span className="font-display text-[13px] font-extrabold text-gradient-indigo">AI</span>
+            </div>
+            <span className="font-display text-[13px] font-bold tracking-wide text-white/90">
+              Marketing Lab
+            </span>
+          </div>
+          <div className="flex items-center gap-1.5 rounded-full bg-white/5 px-2.5 py-1 ring-1 ring-white/10">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
+            </span>
+            <span className="text-[10px] font-semibold uppercase tracking-widest text-white/80">
+              Live · 1 авг
+            </span>
+          </div>
+        </div>
+
+        {/* Kicker */}
+        <div className="mt-6 flex justify-center">
+          <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/70 backdrop-blur">
+            Бесплатный практикум · Zoom
+          </span>
+        </div>
+
         {/* Headline */}
-        <h1 className="text-center text-[32px] font-black leading-[1.05] tracking-tight sm:text-4xl">
-          Перестань продавать <span className="text-blue-600">своё время</span>
-        </h1>
-        <p className="mt-3 text-center text-[13px] leading-tight text-neutral-700">
-          Бесплатный онлайн-практикум для таргетологов.
+        <h1 className="mt-4 text-center font-display text-[38px] font-extrabold leading-[0.95] tracking-tight">
+          Перестань
           <br />
-          Как построить&nbsp;<span className="font-semibold">AI-команду</span>, которая работает вместо тебя.
+          продавать
+          <br />
+          <span className="text-gradient-indigo">своё&nbsp;время</span>
+        </h1>
+
+        <p className="mx-auto mt-3 max-w-[320px] text-center text-[13px] leading-snug text-white/60">
+          Как построить <span className="font-semibold text-white/90">AI‑команду</span>, которая
+          работает вместо тебя — за&nbsp;2 часа в прямом эфире.
         </p>
 
-        {/* Bullets */}
-        <ul className="mt-3 space-y-1 text-[13px] leading-tight text-neutral-800">
-          <li className="flex gap-2"><span className="text-blue-600">✔</span> как работает мой контент завод</li>
-          <li className="flex gap-2"><span className="text-blue-600">✔</span> как запускается реклама в 2 клика</li>
-          <li className="flex gap-2"><span className="text-blue-600">✔</span> как автоматически собираются отчёты</li>
-          <li className="flex gap-2"><span className="text-blue-600">✔</span> как строятся сайты за 5 минут</li>
-        </ul>
-
-        {/* Badges */}
-        <div className="mt-4 flex flex-wrap justify-center gap-2">
-          {[
-            ["С нуля", "🚀"],
-            ["Без опыта", "📈"],
-            ["Онлайн", "💻"],
-          ].map(([t, e]) => (
-            <span key={t} className="rounded-full bg-blue-50 px-3 py-1.5 text-[12px] font-medium text-neutral-800">
-              {t} <span className="ml-0.5">{e}</span>
-            </span>
-          ))}
-        </div>
-        <div className="mt-2 flex flex-wrap justify-center gap-2">
-          <span className="rounded-full bg-blue-50 px-3 py-1.5 text-[12px] font-medium text-neutral-800">
-            Без программирования ⚙️
-          </span>
-          <span className="rounded-full bg-blue-50 px-3 py-1.5 text-[12px] font-medium text-neutral-800">
-            Практика в Zoom 🎥
-          </span>
-        </div>
-
-        {/* Photo with floating cards */}
-        <div className="relative mx-auto mt-4 w-full max-w-sm">
-          <div className="relative mx-auto h-[320px] w-[78%]">
+        {/* Portrait */}
+        <div className="relative mx-auto mt-6 w-[240px]">
+          <div
+            aria-hidden
+            className="absolute -inset-6 rounded-full bg-[radial-gradient(circle,rgba(124,116,255,0.55),transparent_65%)] blur-2xl animate-pulse-ring"
+          />
+          <div className="relative overflow-hidden rounded-[28px] ring-1 ring-white/10 ring-glow">
             <img
               src={yuriAsset.url}
-              alt="Юрий — создатель MarkVision AI"
-              className="h-full w-full rounded-3xl object-cover object-center"
+              alt="Юрий — создатель AI Marketing Lab"
+              className="h-[260px] w-full object-cover"
             />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#05050d] via-[#05050d]/60 to-transparent" />
+            <div className="absolute inset-x-0 bottom-2 flex flex-col items-center">
+              <span className="font-display text-[13px] font-bold text-white">Юрий Марков</span>
+              <span className="text-[10px] uppercase tracking-[0.2em] text-white/50">
+                Founder · AI Marketing Lab
+              </span>
+            </div>
           </div>
 
-          {/* Left floating card */}
-          <div className="absolute -left-1 -top-2 w-[38%] rotate-[-6deg] rounded-2xl bg-white p-2.5 shadow-[0_10px_30px_-8px_rgba(0,0,0,0.18)]">
-            <div className="flex items-center gap-1.5">
-              <span className="grid h-6 w-6 place-items-center rounded-md bg-yellow-400 text-[11px] font-black text-black">T</span>
-              <span className="text-[11px] font-bold">Т-Банк</span>
-            </div>
-            <div className="mt-1 text-[14px] font-black">₸150 000</div>
-            <div className="text-[9px] text-neutral-500">Айдар М.</div>
+          {/* Floating stat left */}
+          <div className="absolute -left-6 top-6 rotate-[-6deg] rounded-2xl border border-white/10 bg-white/[0.06] px-3 py-2 backdrop-blur-xl ring-glow">
+            <div className="text-[9px] uppercase tracking-widest text-white/50">Автоматизация</div>
+            <div className="font-display text-[16px] font-extrabold text-white">92%</div>
           </div>
-
-          {/* Right floating card */}
-          <div className="absolute -right-1 -top-2 w-[38%] rotate-[6deg] rounded-2xl bg-white p-2.5 shadow-[0_10px_30px_-8px_rgba(0,0,0,0.18)]">
-            <div className="flex items-center gap-1.5">
-              <span className="grid h-6 w-6 place-items-center rounded-full bg-green-500 text-[10px] font-black text-white">C</span>
-              <span className="text-[11px] font-bold">Сбербанк</span>
-            </div>
-            <div className="text-[9px] text-neutral-500">Пополнение</div>
-            <div className="mt-0.5 text-[14px] font-black text-green-600">25 000 ₽</div>
-          </div>
-
-          {/* Notification card — below photo, doesn't cover face */}
-          <div className="mx-auto mt-3 max-w-[92%] rounded-2xl bg-white p-3 shadow-[0_12px_32px_-10px_rgba(0,0,0,0.18)] ring-1 ring-black/5">
-            <div className="flex items-start gap-2">
-              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-blue-600 text-[13px] font-black text-white">AI</span>
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center justify-between gap-2">
-                  <span className="truncate text-[12px] font-bold">AI Marketing Lab</span>
-                  <span className="text-[10px] text-neutral-400">сейчас</span>
-                </div>
-                <div className="text-[12px] leading-tight">
-                  Эфир <span className="font-bold text-green-600">1 августа, 20:00</span>
-                </div>
-                <div className="text-[10px] text-neutral-500">Zoom · 90 минут</div>
-              </div>
-            </div>
+          {/* Floating stat right */}
+          <div className="absolute -right-6 bottom-16 rotate-[6deg] rounded-2xl border border-white/10 bg-white/[0.06] px-3 py-2 backdrop-blur-xl ring-glow">
+            <div className="text-[9px] uppercase tracking-widest text-white/50">Экономия</div>
+            <div className="font-display text-[16px] font-extrabold text-emerald-300">−40ч/нед</div>
           </div>
         </div>
+
+        {/* Value bullets */}
+        <ul className="mt-6 grid grid-cols-2 gap-2 text-[11.5px] leading-tight">
+          {[
+            ["Контент завод", "на автопилоте"],
+            ["Реклама", "в 2 клика"],
+            ["Отчёты", "собираются сами"],
+            ["Сайты", "за 5 минут"],
+          ].map(([title, sub]) => (
+            <li
+              key={title}
+              className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 backdrop-blur"
+            >
+              <div className="flex items-center gap-1.5">
+                <span className="grid h-4 w-4 place-items-center rounded-full bg-indigo-500/20 text-[9px] text-indigo-300">
+                  ✓
+                </span>
+                <span className="font-semibold text-white">{title}</span>
+              </div>
+              <div className="mt-0.5 pl-5 text-[10.5px] text-white/50">{sub}</div>
+            </li>
+          ))}
+        </ul>
 
         {/* CTA */}
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="mt-4 flex items-center justify-center gap-3 rounded-full bg-blue-600 px-6 py-4 text-[17px] font-bold text-white shadow-[0_10px_30px_-8px_rgba(37,99,235,0.6)] transition-transform active:scale-[0.98]"
+          className="group relative mt-6 flex items-center justify-between overflow-hidden rounded-2xl bg-gradient-to-r from-indigo-500 via-indigo-500 to-violet-500 px-5 py-4 text-left btn-glow transition-transform active:scale-[0.99]"
         >
-          Забронировать место
-          <span className="grid h-7 w-7 place-items-center rounded-full bg-yellow-300 text-black">
-            <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current"><path d="M8 5v14l11-7z"/></svg>
+          <span
+            aria-hidden
+            className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full"
+          />
+          <span className="relative">
+            <span className="block font-display text-[17px] font-extrabold leading-none text-white">
+              Забронировать место
+            </span>
+            <span className="mt-1 block text-[10.5px] uppercase tracking-[0.2em] text-white/70">
+              Осталось 37 мест
+            </span>
+          </span>
+          <span className="relative grid h-10 w-10 place-items-center rounded-xl bg-white/15 ring-1 ring-white/25">
+            <svg viewBox="0 0 24 24" className="h-4 w-4 fill-white">
+              <path d="M13 5l7 7-7 7-1.4-1.4L16.2 13H4v-2h12.2l-4.6-4.6z" />
+            </svg>
           </span>
         </button>
 
         {/* Timer */}
-        <div className="mt-4 rounded-2xl bg-neutral-900 px-4 py-3 text-center text-white">
-          <div className="text-[11px] uppercase tracking-wider text-neutral-400">
-            До конца акции
+        <div className="mt-4 rounded-2xl border border-white/10 bg-white/[0.03] p-3 backdrop-blur">
+          <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.2em] text-white/50">
+            <span>До конца регистрации</span>
+            <span className="text-indigo-300">−50% бонусов</span>
           </div>
-          <div className="mt-1 flex items-center justify-center gap-2 font-mono text-2xl font-black tabular-nums">
-            <span className="rounded-lg bg-white/10 px-2 py-1">{time.h}</span>
-            <span className="text-neutral-500">:</span>
-            <span className="rounded-lg bg-white/10 px-2 py-1">{time.m}</span>
-            <span className="text-neutral-500">:</span>
-            <span className="rounded-lg bg-white/10 px-2 py-1">{time.s}</span>
-          </div>
-          <div className="mt-1 flex justify-center gap-6 text-[10px] uppercase tracking-widest text-neutral-400">
-            <span>часы</span><span>мин</span><span>сек</span>
+          <div className="mt-2 grid grid-cols-3 gap-2">
+            {[
+              ["часы", time.h],
+              ["минуты", time.m],
+              ["секунды", time.s],
+            ].map(([label, val]) => (
+              <div
+                key={label}
+                className="rounded-xl border border-white/10 bg-gradient-to-b from-white/[0.08] to-white/[0.02] py-2 text-center"
+              >
+                <div className="font-display text-[22px] font-extrabold tabular-nums text-white">
+                  {val}
+                </div>
+                <div className="text-[9px] uppercase tracking-widest text-white/40">{label}</div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
       {/* Modal */}
       {open && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 p-4 sm:items-center" onClick={() => setOpen(false)}>
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-[#05050d]/80 p-4 backdrop-blur-md sm:items-center" onClick={() => setOpen(false)}>
           <div
-            className="w-full max-w-md rounded-3xl bg-white p-6 shadow-2xl"
+            className="w-full max-w-md rounded-3xl border border-white/10 bg-gradient-to-b from-[#141432] to-[#0a0a1a] p-6 text-white ring-glow"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-start justify-between gap-3">
-              <h2 className="text-xl font-black leading-tight">
+              <h2 className="font-display text-xl font-extrabold leading-tight">
                 Заполните форму для получения доступа
               </h2>
               <button
                 type="button"
                 aria-label="Закрыть"
                 onClick={() => setOpen(false)}
-                className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-neutral-100 text-neutral-600"
+                className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/10 text-white/80 hover:bg-white/15"
               >
                 ✕
               </button>
             </div>
             <form onSubmit={submit} className="mt-4 space-y-3">
               <div>
-                <label className="text-[12px] font-semibold text-neutral-700">Имя</label>
+                <label className="text-[11px] font-semibold uppercase tracking-widest text-white/60">Имя</label>
                 <input
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   maxLength={60}
                   placeholder="Ваше имя"
-                  className="mt-1 w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-[15px] outline-none focus:border-blue-500 focus:bg-white"
+                  className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-[15px] text-white placeholder:text-white/30 outline-none focus:border-indigo-400 focus:bg-white/10"
                 />
               </div>
               <div>
-                <label className="text-[12px] font-semibold text-neutral-700">Номер телефона</label>
+                <label className="text-[11px] font-semibold uppercase tracking-widest text-white/60">Номер телефона</label>
                 <input
                   required
                   type="tel"
@@ -212,16 +265,16 @@ function Index() {
                   onChange={(e) => setPhone(e.target.value)}
                   maxLength={20}
                   placeholder="+7 (___) ___-__-__"
-                  className="mt-1 w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-[15px] outline-none focus:border-blue-500 focus:bg-white"
+                  className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-[15px] text-white placeholder:text-white/30 outline-none focus:border-indigo-400 focus:bg-white/10"
                 />
               </div>
               <button
                 type="submit"
-                className="mt-2 w-full rounded-full bg-blue-600 px-6 py-4 text-[16px] font-bold text-white shadow-[0_10px_30px_-8px_rgba(37,99,235,0.6)] active:scale-[0.98]"
+                className="mt-2 w-full rounded-2xl bg-gradient-to-r from-indigo-500 to-violet-500 px-6 py-4 font-display text-[16px] font-extrabold text-white btn-glow active:scale-[0.98]"
               >
                 Участвовать бесплатно
               </button>
-              <p className="text-center text-[10px] text-neutral-400">
+              <p className="text-center text-[10px] text-white/40">
                 Нажимая кнопку, вы соглашаетесь с политикой обработки персональных данных
               </p>
             </form>
