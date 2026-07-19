@@ -226,38 +226,38 @@ function Index() {
 
       {/* Modal */}
       {open && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 p-4 sm:items-center" onClick={() => setOpen(false)}>
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-[#05050d]/80 p-4 backdrop-blur-md sm:items-center" onClick={() => setOpen(false)}>
           <div
-            className="w-full max-w-md rounded-3xl bg-white p-6 shadow-2xl"
+            className="w-full max-w-md rounded-3xl border border-white/10 bg-gradient-to-b from-[#141432] to-[#0a0a1a] p-6 text-white ring-glow"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-start justify-between gap-3">
-              <h2 className="text-xl font-black leading-tight">
+              <h2 className="font-display text-xl font-extrabold leading-tight">
                 Заполните форму для получения доступа
               </h2>
               <button
                 type="button"
                 aria-label="Закрыть"
                 onClick={() => setOpen(false)}
-                className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-neutral-100 text-neutral-600"
+                className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/10 text-white/80 hover:bg-white/15"
               >
                 ✕
               </button>
             </div>
             <form onSubmit={submit} className="mt-4 space-y-3">
               <div>
-                <label className="text-[12px] font-semibold text-neutral-700">Имя</label>
+                <label className="text-[11px] font-semibold uppercase tracking-widest text-white/60">Имя</label>
                 <input
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   maxLength={60}
                   placeholder="Ваше имя"
-                  className="mt-1 w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-[15px] outline-none focus:border-blue-500 focus:bg-white"
+                  className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-[15px] text-white placeholder:text-white/30 outline-none focus:border-indigo-400 focus:bg-white/10"
                 />
               </div>
               <div>
-                <label className="text-[12px] font-semibold text-neutral-700">Номер телефона</label>
+                <label className="text-[11px] font-semibold uppercase tracking-widest text-white/60">Номер телефона</label>
                 <input
                   required
                   type="tel"
@@ -265,16 +265,16 @@ function Index() {
                   onChange={(e) => setPhone(e.target.value)}
                   maxLength={20}
                   placeholder="+7 (___) ___-__-__"
-                  className="mt-1 w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-[15px] outline-none focus:border-blue-500 focus:bg-white"
+                  className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-[15px] text-white placeholder:text-white/30 outline-none focus:border-indigo-400 focus:bg-white/10"
                 />
               </div>
               <button
                 type="submit"
-                className="mt-2 w-full rounded-full bg-blue-600 px-6 py-4 text-[16px] font-bold text-white shadow-[0_10px_30px_-8px_rgba(37,99,235,0.6)] active:scale-[0.98]"
+                className="mt-2 w-full rounded-2xl bg-gradient-to-r from-indigo-500 to-violet-500 px-6 py-4 font-display text-[16px] font-extrabold text-white btn-glow active:scale-[0.98]"
               >
                 Участвовать бесплатно
               </button>
-              <p className="text-center text-[10px] text-neutral-400">
+              <p className="text-center text-[10px] text-white/40">
                 Нажимая кнопку, вы соглашаетесь с политикой обработки персональных данных
               </p>
             </form>
