@@ -13,14 +13,20 @@ function Index() {
       <div className="mx-auto flex min-h-screen max-w-md flex-col px-5 pt-6 pb-6">
         {/* Headline */}
         <h1 className="text-center text-[32px] font-black leading-[1.05] tracking-tight sm:text-4xl">
-          Построй свою{" "}
-          <span className="text-blue-600">AI команду</span>{" "}
-          и перестань продавать своё время
+          Перестань продавать <span className="text-blue-600">своё время</span>
         </h1>
-        <p className="mt-3 text-center text-[13px] leading-tight text-neutral-700 whitespace-pre-line">
-          За <span className="font-semibold">90 минут</span> покажу систему, которая делает{"\u00a0"}{"\n"}
-          контент завод, рекламу, сайты и CRM за тебя
+        <p className="mt-3 text-center text-[13px] leading-tight text-neutral-700">
+          Бесплатный онлайн-практикум для таргетологов. Как построить собственную{" "}
+          <span className="font-semibold">AI-команду</span>, которая работает вместо тебя.
         </p>
+
+        {/* Bullets */}
+        <ul className="mt-3 space-y-1 text-[13px] leading-tight text-neutral-800">
+          <li className="flex gap-2"><span className="text-blue-600">✔</span> как работает мой контент завод</li>
+          <li className="flex gap-2"><span className="text-blue-600">✔</span> как запускается реклама в 2 клика</li>
+          <li className="flex gap-2"><span className="text-blue-600">✔</span> как автоматически собираются отчёты</li>
+          <li className="flex gap-2"><span className="text-blue-600">✔</span> как строятся сайты за 5 минут</li>
+        </ul>
 
         {/* Badges */}
         <div className="mt-4 flex flex-wrap justify-center gap-2">
@@ -98,7 +104,7 @@ function Index() {
           rel="noopener noreferrer"
           className="mt-4 flex items-center justify-center gap-3 rounded-full bg-blue-600 px-6 py-4 text-[17px] font-bold text-white shadow-[0_10px_30px_-8px_rgba(37,99,235,0.6)] transition-transform active:scale-[0.98]"
         >
-          Занять место бесплатно
+          Забронировать место
           <span className="grid h-7 w-7 place-items-center rounded-full bg-yellow-300 text-black">
             <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current"><path d="M8 5v14l11-7z"/></svg>
           </span>
