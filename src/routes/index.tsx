@@ -143,11 +143,6 @@ function Index() {
             <div className="text-[9px] uppercase tracking-widest text-white/50">Автоматизация</div>
             <div className="font-display text-[16px] font-extrabold text-white">92%</div>
           </div>
-          {/* Floating stat right */}
-          <div className="absolute -right-6 bottom-16 rotate-[6deg] rounded-2xl border border-white/10 bg-white/[0.06] px-3 py-2 backdrop-blur-xl ring-glow">
-            <div className="text-[9px] uppercase tracking-widest text-white/50">Экономия</div>
-            <div className="font-display text-[16px] font-extrabold text-emerald-300">−40ч/нед</div>
-          </div>
         </div>
 
         {/* Value bullets */}
