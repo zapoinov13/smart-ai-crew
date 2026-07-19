@@ -15,9 +15,10 @@ function Index() {
         <h1 className="text-center text-[32px] font-black leading-[1.05] tracking-tight sm:text-4xl">
           Перестань продавать <span className="text-blue-600">своё время</span>
         </h1>
-        <p className="mt-3 text-center text-[13px] leading-tight text-neutral-700 whitespace-pre-line">
-          Бесплатный онлайн-практикум для таргетологов.{"\u00a0"}{"\n"}
-          Как построить{"\u00a0"}<span className="font-semibold">AI-команду</span>, которая работает вместо тебя.
+        <p className="mt-3 text-center text-[13px] leading-tight text-neutral-700">
+          Бесплатный онлайн-практикум для таргетологов.
+          <br />
+          Как построить&nbsp;<span className="font-semibold">AI-команду</span>, которая работает вместо тебя.
         </p>
 
         {/* Bullets */}
