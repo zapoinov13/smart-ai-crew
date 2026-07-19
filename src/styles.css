@@ -4,6 +4,54 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@theme {
+  --font-display: "Syne", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --color-ink: #05050d;
+  --color-ink-2: #0a0a1a;
+  --color-ink-3: #141432;
+  --color-indigo-deep: #1e1e5a;
+  --color-indigo-bright: #4f46e5;
+  --color-indigo-glow: #7c74ff;
+}
+
+@utility bg-hero-radial {
+  background:
+    radial-gradient(1200px 600px at 50% -10%, rgba(124, 116, 255, 0.35), transparent 60%),
+    radial-gradient(600px 400px at 90% 20%, rgba(79, 70, 229, 0.28), transparent 60%),
+    radial-gradient(500px 500px at 10% 80%, rgba(30, 30, 90, 0.6), transparent 60%),
+    linear-gradient(180deg, #05050d 0%, #0a0a1a 55%, #05050d 100%);
+}
+
+@utility text-gradient-indigo {
+  background: linear-gradient(120deg, #a5a0ff 0%, #4f46e5 50%, #7c74ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility ring-glow {
+  box-shadow:
+    0 0 0 1px rgba(124, 116, 255, 0.25),
+    0 20px 60px -20px rgba(79, 70, 229, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+@utility btn-glow {
+  box-shadow:
+    0 10px 40px -10px rgba(124, 116, 255, 0.9),
+    0 0 0 1px rgba(255, 255, 255, 0.12) inset;
+}
+
+@keyframes pulse-ring {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.02); }
+}
+
+@utility animate-pulse-ring {
+  animation: pulse-ring 2.4s ease-in-out infinite;
+}
+
 /*
  * Design system definition.
  *
