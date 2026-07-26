@@ -162,13 +162,32 @@ function Index() {
           </div>
 
           {/* Floating chips */}
-          <div className="absolute -left-8 top-8 rotate-[-6deg] rounded-2xl border border-white/10 bg-white/[0.06] px-3 py-2 backdrop-blur-xl ring-glow">
-            <div className="text-[9px] uppercase tracking-widest text-white/50">{"\n"}</div>
-            <div className="font-display text-[16px] font-extrabold text-white">{"\n"}</div>
+          <div className="animate-float-a absolute -left-10 top-6 rounded-2xl border border-white/10 bg-white/[0.06] px-3 py-2 backdrop-blur-xl ring-glow">
+            <div className="flex items-center gap-2">
+              <span className="grid h-6 w-6 place-items-center rounded-full bg-emerald-400/20 text-[11px]">💸</span>
+              <div>
+                <div className="text-[9px] uppercase tracking-widest text-white/50">Оплата</div>
+                <div className="font-display text-[13px] font-extrabold text-white">+$1&nbsp;250</div>
+              </div>
+            </div>
           </div>
-          <div className="absolute -right-6 top-20 rotate-[5deg] rounded-2xl border border-white/10 bg-white/[0.06] px-3 py-2 backdrop-blur-xl ring-glow">
-            <div className="text-[9px] uppercase tracking-widest text-white/50">{"\n"}</div>
-            <div className="font-display text-[16px] font-extrabold text-white">{"\n"}</div>
+          <div className="animate-float-b absolute -right-8 top-24 rounded-2xl border border-white/10 bg-white/[0.06] px-3 py-2 backdrop-blur-xl ring-glow">
+            <div className="flex items-center gap-2">
+              <span className="grid h-6 w-6 place-items-center rounded-full bg-indigo-400/20 text-[11px]">⚡</span>
+              <div>
+                <div className="text-[9px] uppercase tracking-widest text-white/50">Клиент</div>
+                <div className="font-display text-[13px] font-extrabold text-white">Заказ #04</div>
+              </div>
+            </div>
+          </div>
+          <div className="animate-float-a absolute -left-6 bottom-24 rounded-2xl border border-white/10 bg-white/[0.06] px-3 py-2 backdrop-blur-xl ring-glow">
+            <div className="flex items-center gap-2">
+              <span className="grid h-6 w-6 place-items-center rounded-full bg-yellow-400/20 text-[11px]">🚀</span>
+              <div>
+                <div className="text-[9px] uppercase tracking-widest text-white/50">Deploy</div>
+                <div className="font-display text-[13px] font-extrabold text-white">5&nbsp;мин</div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -199,11 +218,11 @@ function Index() {
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="group relative mt-6 flex items-center justify-between overflow-hidden rounded-full bg-[#1E3AFF] pl-7 pr-2 py-2.5 text-left shadow-[0_20px_50px_-15px_rgba(30,58,255,0.7)] transition-transform active:scale-[0.99]"
+          className="group relative mt-6 flex items-center justify-between overflow-hidden rounded-full bg-[#1E3AFF] pl-7 pr-2 py-2.5 text-left animate-cta-pulse transition-transform active:scale-[0.99]"
         >
           <span
             aria-hidden
-            className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full"
+            className="pointer-events-none absolute inset-y-0 -inset-x-1/4 w-1/2 skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shine"
           />
           <span className="relative font-display text-[18px] font-extrabold leading-none text-white">
             Занять место бесплатно
@@ -214,6 +233,15 @@ function Index() {
             </svg>
           </span>
         </button>
+
+        {/* Scarcity */}
+        <div className="mt-3 flex items-center justify-center gap-2 text-[11px] text-white/70">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-rose-400 opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-rose-400" />
+          </span>
+          Осталось <span className="font-display font-extrabold text-white">7&nbsp;мест</span> из 50
+        </div>
 
         {/* Price row */}
         <div className="mt-4 flex items-center justify-center gap-3">
@@ -264,6 +292,33 @@ function Index() {
           </div>
           <div className="text-[10.5px] leading-tight text-white/60">
             {"\n"}
+          </div>
+        </div>
+
+        {/* Marquee */}
+        <div className="relative mt-5 overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_15%,#000_85%,transparent)]">
+          <div className="flex w-max animate-marquee gap-2">
+            {Array.from({ length: 2 }).flatMap((_, r) =>
+              [
+                "No-code",
+                "AI Automation",
+                "Lovable",
+                "Supabase",
+                "n8n",
+                "GPT-5",
+                "Zapier",
+                "Make",
+                "Stripe",
+                "Webflow",
+              ].map((t, i) => (
+                <span
+                  key={`${r}-${i}`}
+                  className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-[10.5px] font-semibold uppercase tracking-widest text-white/60"
+                >
+                  {t}
+                </span>
+              ))
+            )}
           </div>
         </div>
       </div>
