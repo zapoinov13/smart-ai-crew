@@ -142,7 +142,7 @@ function Index() {
             <span className="text-black/45">текста и картинок</span>, ты научишься создавать{" "}
             <mark className="rounded bg-[#E8FF3A] px-1 font-bold text-black">сайты и приложения</mark>
             , за которые{" "}
-            <span className="font-extrabold text-black">бизнес готов платить</span>.
+            <span className="font-extrabold text-black">готовы платить</span>.
           </p>
         </div>
 
