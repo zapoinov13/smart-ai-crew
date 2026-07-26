@@ -120,12 +120,22 @@ function Index() {
           </span>
         </p>
 
-        <div className="mx-auto mt-4 max-w-[320px] rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 backdrop-blur-md">
-          <p className="text-center text-[12.5px] leading-[1.45] text-white/80">
-            Пока другие используют нейросети для{" "}
-            <span className="text-white/50">текста и картинок</span>, ты научишься создавать{" "}
-            <span className="font-semibold text-white">сайты и приложения</span>, за которые бизнес готов платить.
-          </p>
+        <div className="mx-auto mt-5 flex max-w-[340px] flex-wrap justify-center gap-1.5">
+          {[
+            ["С нуля", "🚀"],
+            ["Без опыта", "📈"],
+            ["На удалёнке", "💻"],
+            ["Без тех. образования", "⚙️"],
+            ["Не уходя от основной работы", "💼"],
+          ].map(([label, icon]) => (
+            <span
+              key={label}
+              className="inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 text-[12px] font-semibold text-[#1E3AFF] shadow-[0_6px_20px_-10px_rgba(30,58,255,0.6)] ring-1 ring-white/40"
+            >
+              {label}
+              <span className="text-[13px] leading-none">{icon}</span>
+            </span>
+          ))}
         </div>
 
         {/* Portrait */}
