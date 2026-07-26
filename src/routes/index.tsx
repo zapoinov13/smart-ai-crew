@@ -74,7 +74,7 @@ function Index() {
         }}
       />
 
-      <div className="relative mx-auto flex min-h-screen w-full max-w-[420px] flex-col px-5 pt-5 pb-6">
+      <div className="relative mx-auto flex min-h-screen w-full max-w-[440px] flex-col px-5 pt-5 pb-8">
         {/* Top bar */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -97,24 +97,35 @@ function Index() {
         </div>
 
         {/* Kicker */}
-        <div className="mt-6 flex justify-center">
-          <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/70 backdrop-blur">
-            Бесплатный практикум · Zoom
+        <div className="mt-7 flex justify-center gap-1.5">
+          <span className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[9.5px] font-semibold uppercase tracking-[0.18em] text-white/70 backdrop-blur">
+            Бесплатно
+          </span>
+          <span className="rounded-full border border-indigo-400/30 bg-indigo-500/10 px-2.5 py-1 text-[9.5px] font-semibold uppercase tracking-[0.18em] text-indigo-200 backdrop-blur">
+            Zoom · 1 авг
+          </span>
+          <span className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[9.5px] font-semibold uppercase tracking-[0.18em] text-white/70 backdrop-blur">
+            2 часа
           </span>
         </div>
 
         {/* Headline */}
-        <h1 className="mt-4 text-center font-display text-[38px] font-extrabold leading-[0.95] tracking-tight">
-          Перестань
+        <h1 className="mt-4 text-center font-display text-[34px] font-extrabold leading-[0.98] tracking-tight">
+          Создай своё первое
           <br />
-          продавать
-          <br />
-          <span className="text-gradient-indigo">своё&nbsp;время</span>
+          <span className="text-gradient-indigo">приложение</span> за&nbsp;один вечер
         </h1>
 
-        <p className="mx-auto mt-3 max-w-[320px] text-center text-[13px] leading-snug text-white/60">
-          Как построить <span className="font-semibold text-white/90">AI‑команду</span>, которая
-          работает вместо тебя — за&nbsp;2 часа в прямом эфире.
+        <p className="mx-auto mt-3 max-w-[340px] text-center font-display text-[15px] font-semibold leading-tight text-white/85">
+          И узнай, как продавать такие решения бизнесу{" "}
+          <span className="whitespace-nowrap rounded-md bg-indigo-500/15 px-1.5 py-0.5 text-indigo-200 ring-1 ring-indigo-400/30">
+            от&nbsp;$1&nbsp;000
+          </span>
+        </p>
+
+        <p className="mx-auto mt-3 max-w-[340px] text-center text-[12.5px] leading-snug text-white/55">
+          Пока другие используют нейросети для текста и картинок, ты научишься создавать сайты,
+          приложения и сервисы, за которые бизнес готов платить.
         </p>
 
         {/* Portrait */}
@@ -138,24 +149,28 @@ function Index() {
             </div>
           </div>
 
-          {/* Floating stat left */}
-          <div className="absolute -left-6 top-6 rotate-[-6deg] rounded-2xl border border-white/10 bg-white/[0.06] px-3 py-2 backdrop-blur-xl ring-glow">
-            <div className="text-[9px] uppercase tracking-widest text-white/50">Автоматизация</div>
-            <div className="font-display text-[16px] font-extrabold text-white">92%</div>
+          {/* Floating chips */}
+          <div className="absolute -left-8 top-8 rotate-[-6deg] rounded-2xl border border-white/10 bg-white/[0.06] px-3 py-2 backdrop-blur-xl ring-glow">
+            <div className="text-[9px] uppercase tracking-widest text-white/50">Средний чек</div>
+            <div className="font-display text-[16px] font-extrabold text-white">$1 000+</div>
+          </div>
+          <div className="absolute -right-6 top-20 rotate-[5deg] rounded-2xl border border-white/10 bg-white/[0.06] px-3 py-2 backdrop-blur-xl ring-glow">
+            <div className="text-[9px] uppercase tracking-widest text-white/50">Собрано за</div>
+            <div className="font-display text-[16px] font-extrabold text-white">1 вечер</div>
           </div>
         </div>
 
         {/* Value bullets */}
-        <ul className="mt-6 grid grid-cols-2 gap-2 text-[11.5px] leading-tight">
+        <ul className="mt-7 grid grid-cols-2 gap-2 text-[11.5px] leading-tight">
           {[
-            ["Контент завод", "на автопилоте"],
-            ["Реклама", "в 2 клика"],
-            ["Отчёты", "собираются сами"],
             ["Сайты", "за 5 минут"],
+            ["Приложения", "без кода"],
+            ["AI-сервисы", "под ключ"],
+            ["Продажи", "от $1 000"],
           ].map(([title, sub]) => (
             <li
               key={title}
-              className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 backdrop-blur"
+              className="rounded-xl border border-white/10 bg-gradient-to-b from-white/[0.06] to-white/[0.02] px-3 py-2 backdrop-blur"
             >
               <div className="flex items-center gap-1.5">
                 <span className="grid h-4 w-4 place-items-center rounded-full bg-indigo-500/20 text-[9px] text-indigo-300">
@@ -215,6 +230,22 @@ function Index() {
                 <div className="text-[9px] uppercase tracking-widest text-white/40">{label}</div>
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* Social proof */}
+        <div className="mt-5 flex items-center justify-center gap-3">
+          <div className="flex -space-x-2">
+            {["#7c74ff", "#4f46e5", "#a5a0ff", "#6366f1"].map((c, i) => (
+              <div
+                key={i}
+                className="h-6 w-6 rounded-full ring-2 ring-[#05050d]"
+                style={{ background: `linear-gradient(135deg, ${c}, #1e1e5a)` }}
+              />
+            ))}
+          </div>
+          <div className="text-[10.5px] leading-tight text-white/60">
+            <span className="font-semibold text-white">2 400+</span> уже записались
           </div>
         </div>
       </div>
