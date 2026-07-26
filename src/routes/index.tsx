@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import yuriAsset from "@/assets/yuri.png.asset.json";
+import yuriPhoto from "@/assets/yuri.png";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -153,9 +153,9 @@ function Index() {
           />
           <div className="relative overflow-hidden rounded-[28px] ring-1 ring-white/10 ring-glow">
             <img
-              src={yuriAsset.url}
+              src={yuriPhoto}
               alt="Юрий — создатель AI Marketing Lab"
-              className="h-auto w-full object-contain"
+              className="h-auto w-full object-cover object-top"
             />
             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#05050d] via-[#05050d]/60 to-transparent" />
             <div className="absolute inset-x-0 bottom-2 flex flex-col items-center">
