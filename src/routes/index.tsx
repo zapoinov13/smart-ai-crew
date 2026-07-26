@@ -136,9 +136,8 @@ function Index() {
           ))}
         </div>
 
-        <p className="mx-auto mt-4 max-w-[320px] text-center font-sans text-[12.5px] leading-snug text-white/70">
-          Пока другие используют нейросети для текста и картинок, ты научишься создавать{" "}
-          <span className="font-semibold text-white">сайты и приложения</span>, за которые бизнес готов платить.
+        <p className="mx-auto mt-4 max-w-[320px] whitespace-pre-line text-center font-sans text-[12.5px] leading-snug text-white/70">
+          Пока другие используют нейросети для текста&nbsp;{"\n"}и картинок, ты научишься создавать сайты&nbsp;и приложения, за которые бизнес готов платить.
         </p>
 
         {/* Portrait */}
