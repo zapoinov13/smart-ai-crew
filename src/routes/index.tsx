@@ -110,10 +110,10 @@ function Index() {
         </div>
 
         {/* Headline */}
-        <h1 className="mt-4 text-center font-display text-[34px] font-extrabold leading-[0.98] tracking-tight">
+        <h1 className="mt-4 text-center font-display text-[30px] font-extrabold leading-[0.98] tracking-tight">
           Создай своё первое
           <br />
-          <span className="text-gradient-indigo">приложение</span> за вечер
+          <span className="whitespace-nowrap"><span className="text-gradient-indigo">приложение</span> за вечер</span>
         </h1>
 
         <p className="mx-auto mt-3 max-w-[340px] text-center font-display text-[15px] font-semibold leading-tight text-white/85">
