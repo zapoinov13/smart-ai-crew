@@ -104,9 +104,6 @@ function Index() {
           <span className="rounded-full border border-indigo-400/30 bg-indigo-500/10 px-2.5 py-1 text-[9.5px] font-semibold uppercase tracking-[0.18em] text-indigo-200 backdrop-blur">
             Онлайн Zoom
           </span>
-          <span className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[9.5px] font-semibold uppercase tracking-[0.18em] text-white/70 backdrop-blur">
-            2 часа
-          </span>
         </div>
 
         {/* Headline */}
