@@ -251,7 +251,7 @@ function Index() {
             ))}
           </div>
           <div className="text-[10.5px] leading-tight text-white/60">
-            <span className="font-semibold text-white">2 400+</span> уже записались
+            {"\n"}
           </div>
         </div>
       </div>
