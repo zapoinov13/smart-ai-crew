@@ -147,8 +147,8 @@ function Index() {
 
           {/* Floating chips */}
           <div className="absolute -left-8 top-8 rotate-[-6deg] rounded-2xl border border-white/10 bg-white/[0.06] px-3 py-2 backdrop-blur-xl ring-glow">
-            <div className="text-[9px] uppercase tracking-widest text-white/50">Средний чек</div>
-            <div className="font-display text-[16px] font-extrabold text-white">$1 000+</div>
+            <div className="text-[9px] uppercase tracking-widest text-white/50">{"\n"}</div>
+            <div className="font-display text-[16px] font-extrabold text-white">{"\n"}</div>
           </div>
           <div className="absolute -right-6 top-20 rotate-[5deg] rounded-2xl border border-white/10 bg-white/[0.06] px-3 py-2 backdrop-blur-xl ring-glow">
             <div className="text-[9px] uppercase tracking-widest text-white/50">Собрано за</div>
