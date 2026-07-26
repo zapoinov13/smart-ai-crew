@@ -167,34 +167,6 @@ function Index() {
             </div>
           </div>
 
-          {/* Floating chips */}
-          <div className="animate-float-a absolute -left-10 top-6 rounded-2xl border border-white/10 bg-white/[0.06] px-3 py-2 backdrop-blur-xl ring-glow">
-            <div className="flex items-center gap-2">
-              <span className="grid h-6 w-6 place-items-center rounded-full bg-emerald-400/20 text-[11px]">💸</span>
-              <div>
-                <div className="text-[9px] uppercase tracking-widest text-white/50">Оплата</div>
-                <div className="font-display text-[13px] font-extrabold text-white">+$1&nbsp;250</div>
-              </div>
-            </div>
-          </div>
-          <div className="animate-float-b absolute -right-8 top-24 rounded-2xl border border-white/10 bg-white/[0.06] px-3 py-2 backdrop-blur-xl ring-glow">
-            <div className="flex items-center gap-2">
-              <span className="grid h-6 w-6 place-items-center rounded-full bg-indigo-400/20 text-[11px]">⚡</span>
-              <div>
-                <div className="text-[9px] uppercase tracking-widest text-white/50">Клиент</div>
-                <div className="font-display text-[13px] font-extrabold text-white">Заказ #04</div>
-              </div>
-            </div>
-          </div>
-          <div className="animate-float-a absolute -left-6 bottom-24 rounded-2xl border border-white/10 bg-white/[0.06] px-3 py-2 backdrop-blur-xl ring-glow">
-            <div className="flex items-center gap-2">
-              <span className="grid h-6 w-6 place-items-center rounded-full bg-yellow-400/20 text-[11px]">🚀</span>
-              <div>
-                <div className="text-[9px] uppercase tracking-widest text-white/50">Deploy</div>
-                <div className="font-display text-[13px] font-extrabold text-white">5&nbsp;мин</div>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* Value bullets */}
