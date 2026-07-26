@@ -113,8 +113,8 @@ function Index() {
           <span className="whitespace-nowrap"><span className="text-gradient-indigo">приложение</span> за вечер</span>
         </h1>
 
-        <p className="mx-auto mt-3 max-w-[340px] text-center font-sans text-[16px] font-semibold leading-snug text-white">
-          И узнай, как продавать такие решения бизнесу{" "}
+        <p className="mx-auto mt-3 max-w-[340px] whitespace-pre-line text-center font-sans text-[16px] font-semibold leading-snug text-white">
+          И узнай, как продавать такие{"\n"}решения бизнесу{" "}
           <span className="whitespace-nowrap rounded-md bg-indigo-500/15 px-1.5 py-0.5 text-indigo-200 ring-1 ring-indigo-400/30">
             от&nbsp;$1&nbsp;000
           </span>
