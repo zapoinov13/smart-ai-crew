@@ -272,33 +272,6 @@ function Index() {
             {"\n"}
           </div>
         </div>
-
-        {/* Marquee */}
-        <div className="relative mt-5 overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_15%,#000_85%,transparent)]">
-          <div className="flex w-max animate-marquee gap-2">
-            {Array.from({ length: 2 }).flatMap((_, r) =>
-              [
-                "No-code",
-                "AI Automation",
-                "Lovable",
-                "Supabase",
-                "n8n",
-                "GPT-5",
-                "Zapier",
-                "Make",
-                "Stripe",
-                "Webflow",
-              ].map((t, i) => (
-                <span
-                  key={`${r}-${i}`}
-                  className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-[10.5px] font-semibold uppercase tracking-widest text-white/60"
-                >
-                  {t}
-                </span>
-              ))
-            )}
-          </div>
-        </div>
       </div>
 
       {/* Modal */}
