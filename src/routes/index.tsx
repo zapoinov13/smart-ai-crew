@@ -136,9 +136,15 @@ function Index() {
           ))}
         </div>
 
-        <p className="mx-auto mt-4 max-w-[320px] whitespace-pre-line text-center font-sans text-[12.5px] leading-snug text-white/70">
-          Пока другие используют нейросети для текста&nbsp;{"\n"}и картинок, ты научишься создавать сайты&nbsp;и приложения, за которые бизнес готов платить.
-        </p>
+        <div className="mx-auto mt-4 max-w-[330px] rounded-2xl bg-white px-4 py-3 text-center shadow-[0_10px_40px_-15px_rgba(124,116,255,0.6)] ring-1 ring-black/5">
+          <p className="font-sans text-[12.5px] leading-snug text-black/80">
+            Пока другие используют нейросети для{" "}
+            <span className="text-black/45">текста и картинок</span>, ты научишься создавать{" "}
+            <mark className="rounded bg-[#E8FF3A] px-1 font-bold text-black">сайты и приложения</mark>
+            , за которые{" "}
+            <span className="font-extrabold text-black">бизнес готов платить</span>.
+          </p>
+        </div>
 
         {/* Portrait */}
         <div className="relative mx-auto mt-6 w-[240px]">
