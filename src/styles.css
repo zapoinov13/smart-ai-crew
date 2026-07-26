@@ -81,6 +81,17 @@
 }
 @utility animate-cta-pulse { animation: cta-pulse 2.6s ease-in-out infinite; }
 
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse-ring,
+  .animate-float-a,
+  .animate-float-b,
+  .animate-shine,
+  .animate-marquee,
+  .animate-cta-pulse {
+    animation: none !important;
+  }
+}
+
 /*
  * Design system definition.
  *

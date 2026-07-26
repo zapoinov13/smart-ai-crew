@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
-import yuriPhoto from "@/assets/yuri.png";
+import { useState } from "react";
+import yuriPhoto from "@/assets/yuri.webp";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -8,41 +8,10 @@ export const Route = createFileRoute("/")({
 
 const WHATSAPP_URL = "https://chat.whatsapp.com/JqhTdCL3koe9CaGXaCqj4e?mode=gi_t";
 
-// Countdown target: 24h from first mount, persisted in localStorage
-const DEADLINE_KEY = "promo_deadline_v1";
-function getDeadline() {
-  if (typeof window === "undefined") return Date.now() + 24 * 3600 * 1000;
-  const stored = window.localStorage.getItem(DEADLINE_KEY);
-  if (stored) {
-    const n = Number(stored);
-    if (n > Date.now()) return n;
-  }
-  const next = Date.now() + 24 * 3600 * 1000;
-  window.localStorage.setItem(DEADLINE_KEY, String(next));
-  return next;
-}
-
 function Index() {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [deadline, setDeadline] = useState<number | null>(null);
-  const [now, setNow] = useState<number>(() => Date.now());
-
-  useEffect(() => {
-    setDeadline(getDeadline());
-    const id = setInterval(() => setNow(Date.now()), 1000);
-    return () => clearInterval(id);
-  }, []);
-
-  const time = useMemo(() => {
-    const ms = Math.max(0, (deadline ?? now) - now);
-    const s = Math.floor(ms / 1000);
-    const h = String(Math.floor(s / 3600)).padStart(2, "0");
-    const m = String(Math.floor((s % 3600) / 60)).padStart(2, "0");
-    const sec = String(s % 60).padStart(2, "0");
-    return { h, m, s: sec };
-  }, [deadline, now]);
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,15 +31,7 @@ function Index() {
             "linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)",
           backgroundSize: "44px 44px",
           maskImage: "radial-gradient(ellipse at 50% 30%, black 40%, transparent 75%)",
-        }}
-      />
-      {/* Noise */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.05] mix-blend-overlay"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.7'/></svg>\")",
+          WebkitMaskImage: "radial-gradient(ellipse at 50% 30%, black 40%, transparent 75%)",
         }}
       />
 
@@ -78,7 +39,7 @@ function Index() {
         {/* Top bar */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="grid h-8 w-8 place-items-center rounded-lg bg-white/5 ring-1 ring-white/10 backdrop-blur">
+            <div className="grid h-8 w-8 place-items-center rounded-lg bg-white/5 ring-1 ring-white/10">
               <span className="font-display text-[13px] font-extrabold text-gradient-indigo">AI</span>
             </div>
             <span className="font-display text-[13px] font-bold tracking-wide text-white/90">
@@ -87,7 +48,7 @@ function Index() {
           </div>
           <div className="flex items-center gap-1.5 rounded-full bg-white/5 px-2.5 py-1 ring-1 ring-white/10">
             <span className="relative flex h-1.5 w-1.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75 motion-reduce:animate-none" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
             </span>
             <span className="text-[10px] font-semibold uppercase tracking-widest text-white/80">
@@ -98,10 +59,10 @@ function Index() {
 
         {/* Kicker */}
         <div className="mt-7 flex justify-center gap-1.5">
-          <span className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[9.5px] font-semibold uppercase tracking-[0.18em] text-white/70 backdrop-blur">
+          <span className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[9.5px] font-semibold uppercase tracking-[0.18em] text-white/70">
             Бесплатно
           </span>
-          <span className="rounded-full border border-indigo-400/30 bg-indigo-500/10 px-2.5 py-1 text-[9.5px] font-semibold uppercase tracking-[0.18em] text-indigo-200 backdrop-blur">
+          <span className="rounded-full border border-indigo-400/30 bg-indigo-500/10 px-2.5 py-1 text-[9.5px] font-semibold uppercase tracking-[0.18em] text-indigo-200">
             Онлайн Zoom
           </span>
         </div>
@@ -149,12 +110,16 @@ function Index() {
         <div className="relative mx-auto mt-6 w-[240px]">
           <div
             aria-hidden
-            className="absolute -inset-6 rounded-full bg-[radial-gradient(circle,rgba(124,116,255,0.55),transparent_65%)] blur-2xl animate-pulse-ring"
+            className="absolute -inset-6 rounded-full bg-[radial-gradient(circle,rgba(124,116,255,0.45),transparent_65%)] blur-xl"
           />
           <div className="relative overflow-hidden rounded-[28px] ring-1 ring-white/10 ring-glow">
             <img
               src={yuriPhoto}
               alt="Юрий — создатель AI Marketing Lab"
+              width={720}
+              height={1080}
+              decoding="async"
+              fetchPriority="high"
               className="h-auto w-full object-cover object-top"
             />
             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#05050d] via-[#05050d]/60 to-transparent" />
@@ -173,12 +138,12 @@ function Index() {
           {[
             ["Сайты", "за 5 минут"],
             ["Приложения", "без\u00a0 знаний кода"],
-            ["AI-сервисы", "под ключ для бизнеса"],
-            ["Продажи", "от $1 000"],
+            ["AI таргетолог", ""],
+            ["контент завод", ""],
           ].map(([title, sub]) => (
             <li
               key={title}
-              className="rounded-xl border border-white/10 bg-gradient-to-b from-white/[0.06] to-white/[0.02] px-3 py-2 backdrop-blur"
+              className="rounded-xl border border-white/10 bg-gradient-to-b from-white/[0.06] to-white/[0.02] px-3 py-2"
             >
               <div className="flex items-center gap-1.5">
                 <span className="grid h-4 w-4 place-items-center rounded-full bg-indigo-500/20 text-[9px] text-indigo-300">
@@ -186,7 +151,9 @@ function Index() {
                 </span>
                 <span className="font-semibold text-white">{title}</span>
               </div>
-              <div className="mt-0.5 pl-5 text-[10.5px] text-white/50">{sub}</div>
+              {sub ? (
+                <div className="mt-0.5 pl-5 text-[10.5px] text-white/50">{sub}</div>
+              ) : null}
             </li>
           ))}
         </ul>
@@ -195,11 +162,11 @@ function Index() {
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="group relative mt-6 flex items-center justify-between overflow-hidden rounded-full bg-[#1E3AFF] pl-7 pr-2 py-2.5 text-left animate-cta-pulse transition-transform active:scale-[0.99]"
+          className="group relative mt-6 flex items-center justify-between overflow-hidden rounded-full bg-[#1E3AFF] pl-7 pr-2 py-2.5 text-left animate-cta-pulse motion-reduce:animate-none transition-transform active:scale-[0.99]"
         >
           <span
             aria-hidden
-            className="pointer-events-none absolute inset-y-0 -inset-x-1/4 w-1/2 skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shine"
+            className="pointer-events-none absolute inset-y-0 -inset-x-1/4 w-1/2 skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shine motion-reduce:animate-none"
           />
           <span className="relative font-display text-[18px] font-extrabold leading-none text-white">
             Занять место бесплатно
@@ -214,7 +181,7 @@ function Index() {
         {/* Scarcity */}
         <div className="mt-3 flex items-center justify-center gap-2 whitespace-pre-line text-center text-[11px] text-white/70">
           <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-rose-400 opacity-75" />
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-rose-400 opacity-75 motion-reduce:animate-none" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-rose-400" />
           </span>
           Осталось{"\n"}<span className="font-display font-extrabold text-white">7&nbsp;мест</span>
@@ -230,52 +197,11 @@ function Index() {
             Сейчас бесплатно
           </span>
         </div>
-
-        {/* Timer */}
-        <div className="mt-4 rounded-2xl border border-white/10 bg-white/[0.03] p-3 backdrop-blur">
-          <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.2em] text-white/50">
-            <span>{"\n"}</span>
-            <span className="text-indigo-300">{"\n"}</span>
-          </div>
-          <div className="mt-2 grid grid-cols-3 gap-2">
-            {[
-              ["часы", time.h],
-              ["минуты", time.m],
-              ["секунды", time.s],
-            ].map(([label, val]) => (
-              <div
-                key={label}
-                className="rounded-xl border border-white/10 bg-gradient-to-b from-white/[0.08] to-white/[0.02] py-2 text-center"
-              >
-                <div className="font-display text-[22px] font-extrabold tabular-nums text-white">
-                  {val}
-                </div>
-                <div className="text-[9px] uppercase tracking-widest text-white/40">{label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Social proof */}
-        <div className="mt-5 flex items-center justify-center gap-3">
-          <div className="flex -space-x-2">
-            {["#7c74ff", "#4f46e5", "#a5a0ff", "#6366f1"].map((c, i) => (
-              <div
-                key={i}
-                className="h-6 w-6 rounded-full ring-2 ring-[#05050d]"
-                style={{ background: `linear-gradient(135deg, ${c}, #1e1e5a)` }}
-              />
-            ))}
-          </div>
-          <div className="text-[10.5px] leading-tight text-white/60">
-            {"\n"}
-          </div>
-        </div>
       </div>
 
       {/* Modal */}
       {open && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-[#05050d]/80 p-4 backdrop-blur-md sm:items-center" onClick={() => setOpen(false)}>
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-[#05050d]/80 p-4 backdrop-blur-sm sm:items-center" onClick={() => setOpen(false)}>
           <div
             className="w-full max-w-md rounded-3xl border border-white/10 bg-gradient-to-b from-[#141432] to-[#0a0a1a] p-6 text-white ring-glow"
             onClick={(e) => e.stopPropagation()}
