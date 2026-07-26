@@ -213,12 +213,12 @@ function Index() {
         </button>
 
         {/* Scarcity */}
-        <div className="mt-3 flex items-center justify-center gap-2 text-[11px] text-white/70">
+        <div className="mt-3 flex items-center justify-center gap-2 whitespace-pre-line text-center text-[11px] text-white/70">
           <span className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-rose-400 opacity-75" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-rose-400" />
           </span>
-          Осталось <span className="font-display font-extrabold text-white">7&nbsp;мест</span> из 50
+          Осталось{"\n"}<span className="font-display font-extrabold text-white">7&nbsp;мест</span>
         </div>
 
         {/* Price row */}
