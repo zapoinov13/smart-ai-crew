@@ -151,7 +151,7 @@ function Index() {
             <img
               src={yuriAsset.url}
               alt="Юрий — создатель AI Marketing Lab"
-              className="h-[260px] w-full object-cover"
+              className="h-auto w-full object-contain"
             />
             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#05050d] via-[#05050d]/60 to-transparent" />
             <div className="absolute inset-x-0 bottom-2 flex flex-col items-center">
