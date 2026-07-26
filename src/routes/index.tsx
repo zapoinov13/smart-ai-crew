@@ -123,9 +123,9 @@ function Index() {
           </span>
         </p>
 
-        <p className="mx-auto mt-3 max-w-[340px] text-center text-[12.5px] leading-snug text-white/55">
-          Пока другие используют нейросети для текста и картинок, ты научишься создавать сайты,
-          приложения и сервисы, за которые бизнес готов платить.
+        <p className="mx-auto mt-3 max-w-[340px] text-center text-[12.5px] leading-snug whitespace-pre-line text-white/55">
+          Пока другие используют нейросети для текста и картинок, ты научишься создавать сайты, приложения{"\n"}
+          &nbsp;и сервисы, за которые бизнес готов платить.
         </p>
 
         {/* Portrait */}
