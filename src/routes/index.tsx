@@ -187,26 +187,32 @@ function Index() {
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="group relative mt-6 flex items-center justify-between overflow-hidden rounded-2xl bg-gradient-to-r from-indigo-500 via-indigo-500 to-violet-500 px-5 py-4 text-left btn-glow transition-transform active:scale-[0.99]"
+          className="group relative mt-6 flex items-center justify-between overflow-hidden rounded-full bg-[#1E3AFF] pl-7 pr-2 py-2.5 text-left shadow-[0_20px_50px_-15px_rgba(30,58,255,0.7)] transition-transform active:scale-[0.99]"
         >
           <span
             aria-hidden
             className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full"
           />
-          <span className="relative">
-            <span className="block font-display text-[17px] font-extrabold leading-none text-white">
-              Забронировать место
-            </span>
-            <span className="mt-1 block text-[10.5px] uppercase tracking-[0.2em] text-white/70">
-              Осталось 37 мест
-            </span>
+          <span className="relative font-display text-[18px] font-extrabold leading-none text-white">
+            Занять место бесплатно
           </span>
-          <span className="relative grid h-10 w-10 place-items-center rounded-xl bg-white/15 ring-1 ring-white/25">
-            <svg viewBox="0 0 24 24" className="h-4 w-4 fill-white">
-              <path d="M13 5l7 7-7 7-1.4-1.4L16.2 13H4v-2h12.2l-4.6-4.6z" />
+          <span className="relative grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#E8FF3A]">
+            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="#1E3AFF" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 6l6 6-6 6" />
             </svg>
           </span>
         </button>
+
+        {/* Price row */}
+        <div className="mt-4 flex items-center justify-center gap-3">
+          <span className="font-display text-[18px] font-bold text-white/40 line-through decoration-white/40">
+            $150
+          </span>
+          <span className="font-display text-[26px] font-extrabold text-white">$0</span>
+          <span className="rounded-full bg-emerald-400/90 px-3.5 py-1.5 font-display text-[13px] font-bold text-[#04120a]">
+            Сейчас бесплатно
+          </span>
+        </div>
 
         {/* Timer */}
         <div className="mt-4 rounded-2xl border border-white/10 bg-white/[0.03] p-3 backdrop-blur">
