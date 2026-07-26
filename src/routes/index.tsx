@@ -217,8 +217,8 @@ function Index() {
         {/* Timer */}
         <div className="mt-4 rounded-2xl border border-white/10 bg-white/[0.03] p-3 backdrop-blur">
           <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.2em] text-white/50">
-            <span>До конца регистрации</span>
-            <span className="text-indigo-300">−50% бонусов</span>
+            <span>{"\n"}</span>
+            <span className="text-indigo-300">{"\n"}</span>
           </div>
           <div className="mt-2 grid grid-cols-3 gap-2">
             {[
