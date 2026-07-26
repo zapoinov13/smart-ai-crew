@@ -91,7 +91,7 @@ function Index() {
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
             </span>
             <span className="text-[10px] font-semibold uppercase tracking-widest text-white/80">
-              Live · 1 авг
+              Live
             </span>
           </div>
         </div>
@@ -102,7 +102,7 @@ function Index() {
             Бесплатно
           </span>
           <span className="rounded-full border border-indigo-400/30 bg-indigo-500/10 px-2.5 py-1 text-[9.5px] font-semibold uppercase tracking-[0.18em] text-indigo-200 backdrop-blur">
-            Zoom · 1 авг
+            Онлайн Zoom
           </span>
           <span className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[9.5px] font-semibold uppercase tracking-[0.18em] text-white/70 backdrop-blur">
             2 часа
@@ -110,20 +110,20 @@ function Index() {
         </div>
 
         {/* Headline */}
-        <h1 className="mt-4 text-center font-display text-[30px] font-extrabold leading-[0.98] tracking-tight">
+        <h1 className="mt-4 text-center font-sans text-[32px] font-extrabold leading-[1.02] tracking-tight text-white">
           Создай своё первое
           <br />
           <span className="whitespace-nowrap"><span className="text-gradient-indigo">приложение</span> за вечер</span>
         </h1>
 
-        <p className="mx-auto mt-3 max-w-[340px] text-center font-display text-[15px] font-semibold leading-tight text-white/85">
+        <p className="mx-auto mt-3 max-w-[340px] text-center font-sans text-[16px] font-semibold leading-snug text-white">
           И узнай, как продавать такие решения бизнесу{" "}
           <span className="whitespace-nowrap rounded-md bg-indigo-500/15 px-1.5 py-0.5 text-indigo-200 ring-1 ring-indigo-400/30">
             от&nbsp;$1&nbsp;000
           </span>
         </p>
 
-        <p className="mx-auto mt-3 max-w-[340px] text-center text-[12.5px] leading-snug whitespace-pre-line text-white/55">
+        <p className="mx-auto mt-3 max-w-[340px] text-center text-[13.5px] leading-relaxed whitespace-pre-line text-white/75">
           Пока другие используют нейросети для текста и картинок, ты научишься создавать сайты, приложения{"\n"}
           &nbsp;и сервисы, за которые бизнес готов платить.
         </p>
