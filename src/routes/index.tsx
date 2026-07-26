@@ -154,7 +154,7 @@ function Index() {
             />
             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#05050d] via-[#05050d]/60 to-transparent" />
             <div className="absolute inset-x-0 bottom-2 flex flex-col items-center">
-              <span className="font-display text-[13px] font-bold text-white">Юрий Марков</span>
+              <span className="font-display text-[13px] font-bold text-white">Юрий Валерьевич</span>
               <span className="text-[10px] uppercase tracking-[0.2em] text-white/50">
                 Founder · AI Marketing Lab
               </span>
