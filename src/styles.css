@@ -52,6 +52,35 @@
   animation: pulse-ring 2.4s ease-in-out infinite;
 }
 
+@keyframes float-a {
+  0%, 100% { transform: translateY(0) rotate(-6deg); }
+  50% { transform: translateY(-6px) rotate(-6deg); }
+}
+@keyframes float-b {
+  0%, 100% { transform: translateY(0) rotate(5deg); }
+  50% { transform: translateY(-8px) rotate(5deg); }
+}
+@utility animate-float-a { animation: float-a 5s ease-in-out infinite; }
+@utility animate-float-b { animation: float-b 6s ease-in-out infinite 0.6s; }
+
+@keyframes shine {
+  0% { transform: translateX(-120%); }
+  100% { transform: translateX(220%); }
+}
+@utility animate-shine { animation: shine 3.2s ease-in-out infinite; }
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@utility animate-marquee { animation: marquee 22s linear infinite; }
+
+@keyframes cta-pulse {
+  0%, 100% { box-shadow: 0 20px 50px -15px rgba(30,58,255,0.7), 0 0 0 0 rgba(30,58,255,0.55); }
+  50%      { box-shadow: 0 25px 60px -15px rgba(30,58,255,0.9), 0 0 0 14px rgba(30,58,255,0); }
+}
+@utility animate-cta-pulse { animation: cta-pulse 2.6s ease-in-out infinite; }
+
 /*
  * Design system definition.
  *
