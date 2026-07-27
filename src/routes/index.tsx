@@ -1,23 +1,31 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import yuriPhoto from "@/assets/yuri.webp";
+import logoUrl from "@/assets/ai-marketing-lab-logo.webp";
+import {
+  captureAttribution,
+  openWhatsAppAccess,
+} from "@/lib/wa-registration";
 
 export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const WHATSAPP_URL = "https://chat.whatsapp.com/JqhTdCL3koe9CaGXaCqj4e?mode=gi_t";
-
 function Index() {
-  const [open, setOpen] = useState(false);
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
+  const [busy, setBusy] = useState(false);
 
-  const submit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name.trim() || phone.replace(/\D/g, "").length < 10) return;
-    window.open(WHATSAPP_URL, "_blank", "noopener,noreferrer");
-    setOpen(false);
+  useEffect(() => {
+    captureAttribution();
+  }, []);
+
+  const onCta = async () => {
+    if (busy) return;
+    setBusy(true);
+    try {
+      await openWhatsAppAccess();
+    } finally {
+      window.setTimeout(() => setBusy(false), 1500);
+    }
   };
 
   return (
@@ -37,15 +45,22 @@ function Index() {
 
       <div className="relative mx-auto flex min-h-screen w-full max-w-[440px] flex-col px-5 pt-5 pb-8">
         {/* Top bar */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="grid h-8 w-8 place-items-center rounded-lg bg-white/5 ring-1 ring-white/10">
-              <span className="font-display text-[13px] font-extrabold text-gradient-indigo">AI</span>
-            </div>
-            <span className="font-display text-[13px] font-bold tracking-wide text-white/90">
-              Marketing Lab
-            </span>
-          </div>
+        <div className="flex items-center justify-between gap-3">
+          <a
+            href="/"
+            className="inline-flex shrink-0 items-center"
+            aria-label="AI Marketing Lab by MarkVision"
+          >
+            <img
+              src={logoUrl}
+              alt="AI Marketing Lab by MarkVision"
+              width={168}
+              height={125}
+              decoding="async"
+              fetchPriority="high"
+              className="h-10 w-auto object-contain object-left"
+            />
+          </a>
           <div className="flex items-center gap-1.5 rounded-full bg-white/5 px-2.5 py-1 ring-1 ring-white/10">
             <span className="relative flex h-1.5 w-1.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75 motion-reduce:animate-none" />
@@ -130,7 +145,6 @@ function Index() {
               </span>
             </div>
           </div>
-
         </div>
 
         {/* Value bullets */}
@@ -158,18 +172,19 @@ function Index() {
           ))}
         </ul>
 
-        {/* CTA */}
+        {/* CTA → WhatsApp with hub code */}
         <button
           type="button"
-          onClick={() => setOpen(true)}
-          className="group relative mt-6 flex items-center justify-between overflow-hidden rounded-full bg-[#1E3AFF] pl-7 pr-2 py-2.5 text-left animate-cta-pulse motion-reduce:animate-none transition-transform active:scale-[0.99]"
+          onClick={onCta}
+          disabled={busy}
+          className="group relative mt-6 flex items-center justify-between overflow-hidden rounded-full bg-[#1E3AFF] pl-7 pr-2 py-2.5 text-left animate-cta-pulse motion-reduce:animate-none transition-transform active:scale-[0.99] disabled:opacity-80"
         >
           <span
             aria-hidden
             className="pointer-events-none absolute inset-y-0 -inset-x-1/4 w-1/2 skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shine motion-reduce:animate-none"
           />
           <span className="relative font-display text-[18px] font-extrabold leading-none text-white">
-            Занять место бесплатно
+            {busy ? "Открываю WhatsApp…" : "Занять место бесплатно"}
           </span>
           <span className="relative grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#E8FF3A]">
             <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="#1E3AFF" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
@@ -198,64 +213,6 @@ function Index() {
           </span>
         </div>
       </div>
-
-      {/* Modal */}
-      {open && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-[#05050d]/80 p-4 backdrop-blur-sm sm:items-center" onClick={() => setOpen(false)}>
-          <div
-            className="w-full max-w-md rounded-3xl border border-white/10 bg-gradient-to-b from-[#141432] to-[#0a0a1a] p-6 text-white ring-glow"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-start justify-between gap-3">
-              <h2 className="font-display text-xl font-extrabold leading-tight">
-                Заполните форму для получения доступа
-              </h2>
-              <button
-                type="button"
-                aria-label="Закрыть"
-                onClick={() => setOpen(false)}
-                className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/10 text-white/80 hover:bg-white/15"
-              >
-                ✕
-              </button>
-            </div>
-            <form onSubmit={submit} className="mt-4 space-y-3">
-              <div>
-                <label className="text-[11px] font-semibold uppercase tracking-widest text-white/60">Имя</label>
-                <input
-                  required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  maxLength={60}
-                  placeholder="Ваше имя"
-                  className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-[15px] text-white placeholder:text-white/30 outline-none focus:border-indigo-400 focus:bg-white/10"
-                />
-              </div>
-              <div>
-                <label className="text-[11px] font-semibold uppercase tracking-widest text-white/60">Номер телефона</label>
-                <input
-                  required
-                  type="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  maxLength={20}
-                  placeholder="+7 (___) ___-__-__"
-                  className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-[15px] text-white placeholder:text-white/30 outline-none focus:border-indigo-400 focus:bg-white/10"
-                />
-              </div>
-              <button
-                type="submit"
-                className="mt-2 w-full rounded-2xl bg-gradient-to-r from-indigo-500 to-violet-500 px-6 py-4 font-display text-[16px] font-extrabold text-white btn-glow active:scale-[0.98]"
-              >
-                Участвовать бесплатно
-              </button>
-              <p className="text-center text-[10px] text-white/40">
-                Нажимая кнопку, вы соглашаетесь с политикой обработки персональных данных
-              </p>
-            </form>
-          </div>
-        </div>
-      )}
     </main>
   );
 }
