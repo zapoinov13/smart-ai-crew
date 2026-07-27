@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import yuriPhoto from "@/assets/yuri.webp";
-import logoMarkUrl from "@/assets/ai-marketing-lab-mark.webp";
 import {
   captureAttribution,
   openWhatsAppAccess,
@@ -60,15 +59,6 @@ function Index() {
             className="flex flex-col items-center gap-1.5"
             aria-label="AI Marketing Lab by MarkVision"
           >
-            <img
-              src={logoMarkUrl}
-              alt=""
-              width={120}
-              height={82}
-              decoding="async"
-              fetchPriority="high"
-              className="h-12 w-auto object-contain"
-            />
             <span className="flex flex-col items-center leading-none">
               <span className="font-display text-[13px] font-extrabold tracking-[0.14em] text-gradient-indigo">
                 AI MARKETING LAB
