@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import yuriPhoto from "@/assets/yuri.webp";
-import logoMarkUrl from "@/assets/ai-marketing-lab-mark.webp";
 import { sendCrmLead } from "@/lib/crm-lead";
 import { trackMetaLead } from "@/lib/meta-pixel";
 import {
