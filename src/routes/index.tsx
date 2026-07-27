@@ -156,7 +156,7 @@ function Index() {
 
         <div className="mx-auto mt-4 max-w-[330px] rounded-2xl bg-white px-4 py-3 text-center shadow-[0_10px_40px_-15px_rgba(124,116,255,0.6)] ring-1 ring-black/5">
           <p className="font-sans text-[12.5px] leading-snug text-black/80">
-            Пока другие используют нейросети для текста и картинок, ты научишься создавать{" "}
+            Пока другие используют нейросети для текста и картинок, ты начнешь создавать{" "}
             <span className="font-semibold text-[#7C74FF]">сайты и приложения</span>
             , за которые{" "}
             <span className="font-extrabold text-black">готовы платить</span>.
