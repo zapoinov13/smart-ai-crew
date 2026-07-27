@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import yuriPhoto from "@/assets/yuri.webp";
+import logoMarkUrl from "@/assets/ai-marketing-lab-mark.webp";
 import { sendCrmLead } from "@/lib/crm-lead";
 import { trackMetaLead } from "@/lib/meta-pixel";
 import {
@@ -86,6 +87,31 @@ function Index() {
               Live
             </span>
           </div>
+          <a
+            href="/"
+            className="flex flex-col items-center gap-1.5"
+            aria-label="AI Marketing Lab by MarkVision"
+          >
+            <img
+              src={logoMarkUrl}
+              alt=""
+              width={120}
+              height={82}
+              decoding="async"
+              fetchPriority="high"
+              className="h-12 w-auto object-contain"
+            />
+            <span className="flex flex-col items-center leading-none">
+              <span className="font-display text-[13px] font-extrabold tracking-[0.14em] text-gradient-indigo">
+                AI MARKETING LAB
+              </span>
+              <span className="mt-1 flex items-center gap-2 text-[10px] font-medium tracking-wide text-white/55">
+                <span aria-hidden className="h-px w-4 bg-white/25" />
+                by MarkVision
+                <span aria-hidden className="h-px w-4 bg-white/25" />
+              </span>
+            </span>
+          </a>
         </div>
 
         {/* Kicker */}
