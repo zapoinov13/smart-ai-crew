@@ -21,9 +21,23 @@ declare global {
 }
 
 /**
- * Lead must fire only after WA bot activation via CAPI (hub).
- * Kept as no-op so stray imports never inflate Ads.
+ * Fire Meta Lead after form submit (name/phone).
+ * eventID ties to WA code when available for dedup with CAPI later.
  */
-export function trackMetaLead(_source?: string) {
-  // intentionally empty
+export function trackMetaLead(eventId?: string, extra: Record<string, string> = {}) {
+  if (typeof window === "undefined" || typeof window.fbq !== "function") return;
+  try {
+    const payload = {
+      content_name: "workshop-marketologi",
+      segment: "marketologi",
+      ...extra,
+    };
+    if (eventId) {
+      window.fbq("track", "Lead", payload, { eventID: eventId });
+    } else {
+      window.fbq("track", "Lead", payload);
+    }
+  } catch {
+    // ignore
+  }
 }

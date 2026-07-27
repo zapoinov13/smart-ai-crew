@@ -146,12 +146,11 @@ type ClickResponse = {
   wa_url?: string;
 };
 
-/**
- * CTA handler: POST click → Contact pixel → open WhatsApp with code.
- * On API failure still opens WA without code.
- */
-export async function openWhatsAppAccess(): Promise<void> {
-  if (typeof window === "undefined") return;
+/** Request hub click-code without navigating. */
+export async function requestWaAccessCode(): Promise<{ code: string; href: string }> {
+  if (typeof window === "undefined") {
+    return { code: "", href: buildWaUrl() };
+  }
 
   captureAttribution();
   const att = getAttribution();
@@ -189,7 +188,7 @@ export async function openWhatsAppAccess(): Promise<void> {
       href = data.wa_url || buildWaUrl(code);
     }
   } catch {
-    // fallback: open WA without code
+    // fallback without code
   }
 
   try {
@@ -198,6 +197,16 @@ export async function openWhatsAppAccess(): Promise<void> {
     // ignore
   }
 
+  return { code, href };
+}
+
+/**
+ * CTA handler: POST click → Contact pixel → open WhatsApp with code.
+ * On API failure still opens WA without code.
+ */
+export async function openWhatsAppAccess(): Promise<void> {
+  if (typeof window === "undefined") return;
+  const { code, href } = await requestWaAccessCode();
   trackWhatsAppClick(code);
   window.location.href = href;
 }
