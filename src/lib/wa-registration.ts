@@ -128,7 +128,7 @@ declare global {
 export function trackWhatsAppClick(code: string) {
   if (typeof window === "undefined" || typeof window.fbq !== "function") return;
   const att = getAttribution();
-  const extra = att.source_ig ? { source_ig: att.source_ig } : {};
+  const extra: Record<string, string> = att.source_ig ? { source_ig: att.source_ig } : {};
   const eventId = code || `wa_click_${Date.now()}`;
   try {
     window.fbq("track", "Contact", pixelPayload(extra), { eventID: eventId });
