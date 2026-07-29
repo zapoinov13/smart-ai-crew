@@ -46,10 +46,7 @@ function Index() {
         {/* Top bar */}
         <div className="relative flex items-start justify-end pt-1">
           <div className="flex items-center gap-1.5 rounded-full bg-white/5 px-2.5 py-1 ring-1 ring-white/10">
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75 motion-reduce:animate-none" />
-              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
-            </span>
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
             <span className="text-[10px] font-semibold uppercase tracking-widest text-white/80">
               Live
             </span>
@@ -107,16 +104,12 @@ function Index() {
 
         {/* Portrait */}
         <div className="relative mx-auto mt-6 w-[240px]">
-          <div
-            aria-hidden
-            className="absolute -inset-6 rounded-full bg-[radial-gradient(circle,rgba(124,116,255,0.45),transparent_65%)] blur-xl"
-          />
-          <div className="relative overflow-hidden rounded-[28px] ring-1 ring-white/10 ring-glow">
+          <div className="relative overflow-hidden rounded-[28px] ring-1 ring-white/10">
             <img
               src={yuriPhoto}
               alt="Юрий — создатель AI Marketing Lab"
-              width={720}
-              height={1080}
+              width={480}
+              height={720}
               decoding="async"
               fetchPriority="high"
               className="h-auto w-full object-cover object-top"
@@ -161,12 +154,8 @@ function Index() {
           type="button"
           onClick={onCta}
           disabled={busy}
-          className="group relative mt-6 flex items-center justify-between overflow-hidden rounded-full bg-[#1E3AFF] pl-7 pr-2 py-2.5 text-left animate-cta-pulse motion-reduce:animate-none transition-transform active:scale-[0.99] disabled:opacity-80"
+          className="group relative mt-6 flex items-center justify-between overflow-hidden rounded-full bg-[#1E3AFF] pl-7 pr-2 py-2.5 text-left shadow-[0_16px_40px_-12px_rgba(30,58,255,0.75)] transition-transform active:scale-[0.99] disabled:opacity-80"
         >
-          <span
-            aria-hidden
-            className="pointer-events-none absolute inset-y-0 -inset-x-1/4 w-1/2 skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shine motion-reduce:animate-none"
-          />
           <span className="relative font-display text-[18px] font-extrabold leading-none text-white">
             {busy ? "Открываю WhatsApp…" : "Занять место бесплатно"}
           </span>
@@ -179,10 +168,7 @@ function Index() {
 
         {/* Scarcity */}
         <div className="mt-3 flex items-center justify-center gap-2 whitespace-pre-line text-center text-[11px] text-white/70">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-rose-400 opacity-75 motion-reduce:animate-none" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-rose-400" />
-          </span>
+          <span className="h-2 w-2 rounded-full bg-rose-400" />
           Осталось{"\n"}<span className="font-display font-extrabold text-white">7&nbsp;мест</span>
         </div>
 

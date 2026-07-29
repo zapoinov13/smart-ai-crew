@@ -11,7 +11,8 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { META_PIXEL_ID, META_PIXEL_INIT_SCRIPT } from "../lib/meta-pixel";
+import { META_PIXEL_ID, META_PIXEL_DEFERRED_LOADER } from "../lib/meta-pixel";
+import yuriPhoto from "../assets/yuri.webp";
 
 function NotFoundComponent() {
   return (
@@ -88,17 +89,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
+      { rel: "stylesheet", href: appCss },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap",
-      },
+      { rel: "preconnect", href: "https://api.whatsapp.com" },
+      { rel: "dns-prefetch", href: "https://n8n.zapoinov.com" },
+      { rel: "preload", as: "image", href: yuriPhoto, type: "image/webp" },
     ],
   }),
   shellComponent: RootShell,
@@ -107,6 +104,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   errorComponent: ErrorComponent,
 });
 
+const FONT_HREF =
+  "https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap";
+
 function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="ru">
@@ -114,9 +114,20 @@ function RootShell({ children }: { children: ReactNode }) {
         <HeadContent />
         <link rel="preconnect" href="https://connect.facebook.net" />
         <link rel="dns-prefetch" href="https://www.facebook.com" />
+        <link rel="preload" as="style" href={FONT_HREF} />
+        <link
+          rel="stylesheet"
+          href={FONT_HREF}
+          media="print"
+          // @ts-expect-error React supports string onLoad for progressive CSS
+          onLoad="this.media='all'"
+        />
+        <noscript>
+          <link rel="stylesheet" href={FONT_HREF} />
+        </noscript>
         <script
           dangerouslySetInnerHTML={{
-            __html: META_PIXEL_INIT_SCRIPT,
+            __html: META_PIXEL_DEFERRED_LOADER,
           }}
         />
       </head>

@@ -1,5 +1,7 @@
 /** WA-first CTA + first-touch attribution for workshop-marketologi */
 
+import { trackMetaLead } from "@/lib/meta-pixel";
+
 export const CLICK_ENDPOINT = "https://n8n.zapoinov.com/webhook/event-hub-click";
 export const WA_PHONE = "77776290913";
 export const SEGMENT = "marketologi";
@@ -175,15 +177,16 @@ declare global {
  * eventID = hub code when available for CAPI dedup.
  */
 export function trackWhatsAppLead(code: string) {
-  if (typeof window === "undefined" || typeof window.fbq !== "function") return;
+  if (typeof window === "undefined") return;
   const att = getAttribution();
   const extra: Record<string, string> = {};
   if (att.source_ig) extra.source_ig = att.source_ig;
   const adId = resolveAdId(att);
   if (adId) extra.ad_id = adId;
   const eventId = code || `wa_lead_${Date.now()}`;
+  trackMetaLead(eventId, extra);
+  if (typeof window.fbq !== "function") return;
   try {
-    window.fbq("track", "Lead", pixelPayload(extra), { eventID: eventId });
     window.fbq("trackCustom", "WhatsAppClick", pixelPayload(extra), {
       eventID: `${eventId}:wa`,
     });
@@ -217,6 +220,8 @@ export async function requestWaAccessCode(): Promise<{ code: string; href: strin
   let href = buildWaUrl();
 
   try {
+    const controller = new AbortController();
+    const timer = window.setTimeout(() => controller.abort(), 900);
     const response = await fetch(CLICK_ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -243,14 +248,16 @@ export async function requestWaAccessCode(): Promise<{ code: string; href: strin
         ...utms,
       }),
       keepalive: true,
+      signal: controller.signal,
     });
+    window.clearTimeout(timer);
     const data = (await response.json().catch(() => ({}))) as ClickResponse;
     if (response.ok && data?.code) {
       code = String(data.code);
       href = data.wa_url || buildWaUrl(code);
     }
   } catch {
-    // fallback without code
+    // timeout / network — open WA without code
   }
 
   try {
