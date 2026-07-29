@@ -17,7 +17,6 @@ function Index() {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [company, setCompany] = useState(""); // honeypot
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
 
@@ -25,12 +24,17 @@ function Index() {
     captureAttribution();
   }, []);
 
-  const submit = async (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (busy) return;
 
-    const trimmedName = name.trim();
-    const digits = phone.replace(/\D/g, "");
+    // Read FormData so browser autofill is not lost (React state can stay empty)
+    const fd = new FormData(e.currentTarget);
+    const trimmedName = String(fd.get("name") || name).trim();
+    const rawPhone = String(fd.get("phone") || phone).trim();
+    const honeypot = String(fd.get("mv_hp_field") || "").trim();
+    const digits = rawPhone.replace(/\D/g, "");
+
     if (!trimmedName || digits.length < 10) {
       setError("Укажите имя и номер телефона");
       return;
@@ -40,15 +44,14 @@ function Index() {
     setError("");
 
     try {
+      // CRM must not block WhatsApp/Lead if webhook flakes
       const [{ code, href }, crmOk] = await Promise.all([
         requestWaAccessCode(),
-        sendCrmLead({ name: trimmedName, phone: phone.trim(), company }),
+        sendCrmLead({ name: trimmedName, phone: rawPhone, honeypot }),
       ]);
 
-      if (!crmOk && !company.trim()) {
-        setError("Не удалось отправить заявку. Попробуйте ещё раз.");
-        setBusy(false);
-        return;
+      if (!crmOk && !honeypot) {
+        console.warn("[lead-form] CRM send failed — still opening WhatsApp");
       }
 
       trackMetaLead(code || undefined, getUtms());
@@ -285,15 +288,14 @@ function Index() {
                   className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-[15px] text-white placeholder:text-white/30 outline-none focus:border-indigo-400 focus:bg-white/10 disabled:opacity-60"
                 />
               </div>
-              {/* honeypot */}
+              {/* honeypot — obscure name, never "company" (autofill) */}
               <input
-                name="company"
-                value={company}
-                onChange={(e) => setCompany(e.target.value)}
+                name="mv_hp_field"
                 tabIndex={-1}
                 autoComplete="off"
                 aria-hidden
-                className="absolute left-[-9999px]"
+                defaultValue=""
+                className="absolute left-[-9999px] h-0 w-0 opacity-0"
               />
               {error ? (
                 <p className="text-center text-[12px] text-rose-300">{error}</p>
