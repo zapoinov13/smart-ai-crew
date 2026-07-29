@@ -1,12 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import yuriPhoto from "@/assets/yuri.webp";
-import { sendCrmLead } from "@/lib/crm-lead";
-import { trackMetaLead } from "@/lib/meta-pixel";
+import logoMarkUrl from "@/assets/ai-marketing-lab-mark.webp";
 import {
   captureAttribution,
-  getUtms,
-  requestWaAccessCode,
+  openWhatsAppAccess,
 } from "@/lib/wa-registration";
 
 export const Route = createFileRoute("/")({
@@ -14,51 +12,19 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const [open, setOpen] = useState(false);
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState("");
 
   useEffect(() => {
     captureAttribution();
   }, []);
 
-  const submit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onCta = async () => {
     if (busy) return;
-
-    // Read FormData so browser autofill is not lost (React state can stay empty)
-    const fd = new FormData(e.currentTarget);
-    const trimmedName = String(fd.get("name") || name).trim();
-    const rawPhone = String(fd.get("phone") || phone).trim();
-    const honeypot = String(fd.get("mv_hp_field") || "").trim();
-    const digits = rawPhone.replace(/\D/g, "");
-
-    if (!trimmedName || digits.length < 10) {
-      setError("Укажите имя и номер телефона");
-      return;
-    }
-
     setBusy(true);
-    setError("");
-
     try {
-      // CRM must not block WhatsApp/Lead if webhook flakes
-      const [{ code, href }, crmOk] = await Promise.all([
-        requestWaAccessCode(),
-        sendCrmLead({ name: trimmedName, phone: rawPhone, honeypot }),
-      ]);
-
-      if (!crmOk && !honeypot) {
-        console.warn("[lead-form] CRM send failed — still opening WhatsApp");
-      }
-
-      trackMetaLead(code || undefined, getUtms());
-      window.location.href = href;
-    } catch {
-      setError("Ошибка сети. Попробуйте ещё раз.");
-      setBusy(false);
+      await openWhatsAppAccess();
+    } finally {
+      window.setTimeout(() => setBusy(false), 1500);
     }
   };
 
@@ -89,6 +55,31 @@ function Index() {
               Live
             </span>
           </div>
+          <a
+            href="/"
+            className="flex flex-col items-center gap-1.5"
+            aria-label="AI Marketing Lab by MarkVision"
+          >
+            <img
+              src={logoMarkUrl}
+              alt=""
+              width={120}
+              height={82}
+              decoding="async"
+              fetchPriority="high"
+              className="h-12 w-auto object-contain"
+            />
+            <span className="flex flex-col items-center leading-none">
+              <span className="font-display text-[13px] font-extrabold tracking-[0.14em] text-gradient-indigo">
+                AI MARKETING LAB
+              </span>
+              <span className="mt-1 flex items-center gap-2 text-[10px] font-medium tracking-wide text-white/55">
+                <span aria-hidden className="h-px w-4 bg-white/25" />
+                by MarkVision
+                <span aria-hidden className="h-px w-4 bg-white/25" />
+              </span>
+            </span>
+          </a>
         </div>
 
         {/* Kicker */}
@@ -191,18 +182,19 @@ function Index() {
           ))}
         </ul>
 
-        {/* CTA → open form */}
+        {/* CTA → WhatsApp + Lead */}
         <button
           type="button"
-          onClick={() => setOpen(true)}
-          className="group relative mt-6 flex items-center justify-between overflow-hidden rounded-full bg-[#1E3AFF] pl-7 pr-2 py-2.5 text-left animate-cta-pulse motion-reduce:animate-none transition-transform active:scale-[0.99]"
+          onClick={onCta}
+          disabled={busy}
+          className="group relative mt-6 flex items-center justify-between overflow-hidden rounded-full bg-[#1E3AFF] pl-7 pr-2 py-2.5 text-left animate-cta-pulse motion-reduce:animate-none transition-transform active:scale-[0.99] disabled:opacity-80"
         >
           <span
             aria-hidden
             className="pointer-events-none absolute inset-y-0 -inset-x-1/4 w-1/2 skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shine motion-reduce:animate-none"
           />
           <span className="relative font-display text-[18px] font-extrabold leading-none text-white">
-            Занять место бесплатно
+            {busy ? "Открываю WhatsApp…" : "Занять место бесплатно"}
           </span>
           <span className="relative grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#E8FF3A]">
             <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="#1E3AFF" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
@@ -231,89 +223,6 @@ function Index() {
           </span>
         </div>
       </div>
-
-      {/* Lead form modal */}
-      {open && (
-        <div
-          className="fixed inset-0 z-50 flex items-end justify-center bg-[#05050d]/80 p-4 backdrop-blur-sm sm:items-center"
-          onClick={() => !busy && setOpen(false)}
-        >
-          <div
-            className="w-full max-w-md rounded-3xl border border-white/10 bg-gradient-to-b from-[#141432] to-[#0a0a1a] p-6 text-white ring-glow"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-start justify-between gap-3">
-              <h2 className="font-display text-xl font-extrabold leading-tight">
-                Заполните форму для получения доступа
-              </h2>
-              <button
-                type="button"
-                aria-label="Закрыть"
-                disabled={busy}
-                onClick={() => setOpen(false)}
-                className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/10 text-white/80 hover:bg-white/15 disabled:opacity-50"
-              >
-                ✕
-              </button>
-            </div>
-            <form id="lead-form" onSubmit={submit} className="mt-4 space-y-3">
-              <div>
-                <label className="text-[11px] font-semibold uppercase tracking-widest text-white/60">
-                  Имя
-                </label>
-                <input
-                  name="name"
-                  required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  maxLength={60}
-                  placeholder="Ваше имя"
-                  disabled={busy}
-                  className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-[15px] text-white placeholder:text-white/30 outline-none focus:border-indigo-400 focus:bg-white/10 disabled:opacity-60"
-                />
-              </div>
-              <div>
-                <label className="text-[11px] font-semibold uppercase tracking-widest text-white/60">
-                  Номер телефона
-                </label>
-                <input
-                  name="phone"
-                  required
-                  type="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  maxLength={20}
-                  placeholder="+7 (___) ___-__-__"
-                  disabled={busy}
-                  className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-[15px] text-white placeholder:text-white/30 outline-none focus:border-indigo-400 focus:bg-white/10 disabled:opacity-60"
-                />
-              </div>
-              {/* honeypot — obscure name, never "company" (autofill) */}
-              <input
-                name="mv_hp_field"
-                tabIndex={-1}
-                autoComplete="off"
-                aria-hidden
-                defaultValue=""
-                className="absolute left-[-9999px] h-0 w-0 opacity-0"
-              />
-              {error ? (
-                <p className="text-center text-[12px] text-rose-300">{error}</p>
-              ) : null}
-              <button
-                type="submit"
-                disabled={busy}
-                className="mt-2 w-full rounded-2xl bg-gradient-to-r from-indigo-500 to-violet-500 px-6 py-4 font-display text-[16px] font-extrabold text-white btn-glow active:scale-[0.98] disabled:opacity-70"
-              >
-                {busy ? "Отправляем…" : "Участвовать бесплатно"}
-              </button>
-              <p className="text-center text-[10px] text-white/40">
-                Нажимая кнопку, вы соглашаетесь с политикой обработки персональных данных
-              </p>
-            </form>
-          </div>
-        </div>
-      )}
     </main>
   );
 }

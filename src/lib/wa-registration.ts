@@ -1,4 +1,4 @@
-/** WA-first registration + first-touch attribution for workshop-marketologi */
+/** WA-first CTA + first-touch attribution for workshop-marketologi */
 
 export const CLICK_ENDPOINT = "https://n8n.zapoinov.com/webhook/event-hub-click";
 export const WA_PHONE = "77776290913";
@@ -10,6 +10,7 @@ export const CLICK_KEY = "mv_marketologi_click";
 
 type Attribution = Record<string, string>;
 
+/** UTM + click ids + Meta ad ids from URL */
 const ATTR_KEYS = [
   "utm_source",
   "utm_medium",
@@ -19,6 +20,15 @@ const ATTR_KEYS = [
   "utm_id",
   "fbclid",
   "gclid",
+  "ad_id",
+  "adid",
+  "adset_id",
+  "campaign_id",
+  "ad_name",
+  "adset_name",
+  "campaign_name",
+  "placement",
+  "site_source_name",
 ] as const;
 
 function readStore(): Attribution {
@@ -38,7 +48,30 @@ function writeStore(stored: Attribution) {
   }
 }
 
-/** First-touch: capture UTM/fbclid once, never overwrite with empty later. */
+/** Resolve Meta ad id from common URL / UTM shapes. */
+export function resolveAdId(att: Attribution = getAttribution()): string {
+  if (typeof window !== "undefined") {
+    const params = new URLSearchParams(window.location.search);
+    for (const key of ["ad_id", "adid", "utm_content", "utm_term"]) {
+      const value = params.get(key);
+      if (value) {
+        // utm_content often is the ad id or {{ad.id}}
+        if (key === "utm_content" || key === "utm_term") {
+          if (/^\d{5,}$/.test(value)) return value;
+        } else {
+          return value;
+        }
+      }
+    }
+  }
+  if (att.ad_id) return att.ad_id;
+  if (att.adid) return att.adid;
+  if (att.utm_content && /^\d{5,}$/.test(att.utm_content)) return att.utm_content;
+  if (att.utm_term && /^\d{5,}$/.test(att.utm_term)) return att.utm_term;
+  return "";
+}
+
+/** First-touch: capture UTM/fbclid/ad ids once. */
 export function captureAttribution(): Attribution {
   if (typeof window === "undefined") return {};
   const params = new URLSearchParams(window.location.search);
@@ -49,6 +82,14 @@ export function captureAttribution(): Attribution {
     if (value && !stored[key]) stored[key] = value;
   }
 
+  // Meta dynamic URL macros sometimes arrive as h_ad_id etc.
+  for (const [key, value] of params.entries()) {
+    if (!value) continue;
+    if (/^(h_)?(ad|adset|campaign)(_?id|_?name)?$/i.test(key) && !stored[key]) {
+      stored[key] = value;
+    }
+  }
+
   let ig = params.get("ig") || params.get("ig_source") || "";
   if (
     !ig &&
@@ -57,6 +98,9 @@ export function captureAttribution(): Attribution {
     ig = params.get("utm_content") || stored.utm_content || "";
   }
   if (ig && !stored.source_ig) stored.source_ig = ig.replace(/^@+/, "").trim();
+
+  const adId = resolveAdId(stored);
+  if (adId && !stored.ad_id) stored.ad_id = adId;
 
   if (document.referrer && !stored.entry_referrer) {
     stored.entry_referrer = document.referrer;
@@ -102,9 +146,11 @@ export function getFbIds(): { fbp?: string; fbc?: string } {
 }
 
 export function pixelPayload(extra: Record<string, string> = {}) {
+  const adId = resolveAdId();
   return {
     content_name: CONTENT_NAME,
     segment: SEGMENT,
+    ...(adId ? { ad_id: adId } : {}),
     ...getUtms(),
     ...extra,
   };
@@ -124,14 +170,20 @@ declare global {
   }
 }
 
-/** Browser pixel only — Contact + WhatsAppClick. Never Lead on click. */
-export function trackWhatsAppClick(code: string) {
+/**
+ * Lead on WhatsApp CTA click (no form).
+ * eventID = hub code when available for CAPI dedup.
+ */
+export function trackWhatsAppLead(code: string) {
   if (typeof window === "undefined" || typeof window.fbq !== "function") return;
   const att = getAttribution();
-  const extra: Record<string, string> = att.source_ig ? { source_ig: att.source_ig } : {};
-  const eventId = code || `wa_click_${Date.now()}`;
+  const extra: Record<string, string> = {};
+  if (att.source_ig) extra.source_ig = att.source_ig;
+  const adId = resolveAdId(att);
+  if (adId) extra.ad_id = adId;
+  const eventId = code || `wa_lead_${Date.now()}`;
   try {
-    window.fbq("track", "Contact", pixelPayload(extra), { eventID: eventId });
+    window.fbq("track", "Lead", pixelPayload(extra), { eventID: eventId });
     window.fbq("trackCustom", "WhatsAppClick", pixelPayload(extra), {
       eventID: `${eventId}:wa`,
     });
@@ -146,7 +198,7 @@ type ClickResponse = {
   wa_url?: string;
 };
 
-/** Request hub click-code without navigating. */
+/** Request hub click-code; sends ad attribution to n8n. */
 export async function requestWaAccessCode(): Promise<{ code: string; href: string }> {
   if (typeof window === "undefined") {
     return { code: "", href: buildWaUrl() };
@@ -159,6 +211,7 @@ export async function requestWaAccessCode(): Promise<{ code: string; href: strin
   const fbclid =
     att.fbclid || new URLSearchParams(window.location.search).get("fbclid") || "";
   const landing = att.entry_page || window.location.href;
+  const adId = resolveAdId(att);
 
   let code = "";
   let href = buildWaUrl();
@@ -178,9 +231,18 @@ export async function requestWaAccessCode(): Promise<{ code: string; href: strin
         fbclid,
         gclid: att.gclid || "",
         utm_id: att.utm_id || "",
+        ad_id: adId || att.ad_id || "",
+        adset_id: att.adset_id || "",
+        campaign_id: att.campaign_id || "",
+        ad_name: att.ad_name || "",
+        adset_name: att.adset_name || "",
+        campaign_name: att.campaign_name || "",
+        placement: att.placement || "",
+        site_source_name: att.site_source_name || "",
         ...fb,
         ...utms,
       }),
+      keepalive: true,
     });
     const data = (await response.json().catch(() => ({}))) as ClickResponse;
     if (response.ok && data?.code) {
@@ -192,7 +254,10 @@ export async function requestWaAccessCode(): Promise<{ code: string; href: strin
   }
 
   try {
-    sessionStorage.setItem(CLICK_KEY, JSON.stringify({ code, ts: Date.now() }));
+    sessionStorage.setItem(
+      CLICK_KEY,
+      JSON.stringify({ code, ad_id: adId, ts: Date.now() }),
+    );
   } catch {
     // ignore
   }
@@ -201,12 +266,12 @@ export async function requestWaAccessCode(): Promise<{ code: string; href: strin
 }
 
 /**
- * CTA handler: POST click → Contact pixel → open WhatsApp with code.
- * On API failure still opens WA without code.
+ * CTA: hub click (ad attribution) → Lead pixel → WhatsApp.
+ * On API failure still opens WA with «Хочу получить доступ».
  */
 export async function openWhatsAppAccess(): Promise<void> {
   if (typeof window === "undefined") return;
   const { code, href } = await requestWaAccessCode();
-  trackWhatsAppClick(code);
+  trackWhatsAppLead(code);
   window.location.href = href;
 }

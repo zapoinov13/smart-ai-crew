@@ -21,8 +21,8 @@ declare global {
 }
 
 /**
- * Fire Meta Lead after form submit (name/phone).
- * eventID ties to WA code when available for dedup with CAPI later.
+ * Fire Meta Lead (WA CTA click or legacy form).
+ * eventID ties to hub code when available for CAPI dedup.
  */
 export function trackMetaLead(eventId?: string, extra: Record<string, string> = {}) {
   if (typeof window === "undefined" || typeof window.fbq !== "function") return;
