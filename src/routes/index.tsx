@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import yuriPhoto from "@/assets/yuri.webp";
-import logoMarkUrl from "@/assets/ai-marketing-lab-mark.webp";
 import {
   captureAttribution,
   openWhatsAppAccess,
@@ -45,8 +44,8 @@ function Index() {
 
       <div className="relative mx-auto flex min-h-screen w-full max-w-[440px] flex-col px-5 pt-5 pb-8">
         {/* Top bar */}
-        <div className="relative flex items-start justify-center pt-1">
-          <div className="absolute right-0 top-0 z-10 flex items-center gap-1.5 rounded-full bg-white/5 px-2.5 py-1 ring-1 ring-white/10">
+        <div className="relative flex items-start justify-end pt-1">
+          <div className="flex items-center gap-1.5 rounded-full bg-white/5 px-2.5 py-1 ring-1 ring-white/10">
             <span className="relative flex h-1.5 w-1.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75 motion-reduce:animate-none" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
@@ -55,31 +54,6 @@ function Index() {
               Live
             </span>
           </div>
-          <a
-            href="/"
-            className="flex flex-col items-center gap-1.5"
-            aria-label="AI Marketing Lab by MarkVision"
-          >
-            <img
-              src={logoMarkUrl}
-              alt=""
-              width={120}
-              height={82}
-              decoding="async"
-              fetchPriority="high"
-              className="h-12 w-auto object-contain"
-            />
-            <span className="flex flex-col items-center leading-none">
-              <span className="font-display text-[13px] font-extrabold tracking-[0.14em] text-gradient-indigo">
-                AI MARKETING LAB
-              </span>
-              <span className="mt-1 flex items-center gap-2 text-[10px] font-medium tracking-wide text-white/55">
-                <span aria-hidden className="h-px w-4 bg-white/25" />
-                by MarkVision
-                <span aria-hidden className="h-px w-4 bg-white/25" />
-              </span>
-            </span>
-          </a>
         </div>
 
         {/* Kicker */}
