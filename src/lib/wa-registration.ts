@@ -221,7 +221,7 @@ export async function requestWaAccessCode(): Promise<{ code: string; href: strin
 
   try {
     const controller = new AbortController();
-    const timer = window.setTimeout(() => controller.abort(), 900);
+    const timer = window.setTimeout(() => controller.abort(), 2500);
     const response = await fetch(CLICK_ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
