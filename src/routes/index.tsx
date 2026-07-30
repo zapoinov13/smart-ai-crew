@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import yuriPhoto from "@/assets/yuri.webp";
-import { openWhatsAppAccess } from "@/lib/wa-redirect";
+import { initLandingPixel, openWhatsAppAccess } from "@/lib/wa-redirect";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -10,10 +10,18 @@ export const Route = createFileRoute("/")({
 function Index() {
   const [busy, setBusy] = useState(false);
 
-  const onCta = () => {
+  useEffect(() => {
+    initLandingPixel();
+  }, []);
+
+  const onCta = async () => {
     if (busy) return;
     setBusy(true);
-    openWhatsAppAccess();
+    try {
+      await openWhatsAppAccess();
+    } finally {
+      window.setTimeout(() => setBusy(false), 1500);
+    }
   };
 
   return (
