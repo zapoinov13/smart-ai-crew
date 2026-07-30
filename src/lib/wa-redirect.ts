@@ -1,11 +1,8 @@
-/** WhatsApp redirect with ad attribution via ref: + Meta Pixel/CAPI. */
+/** WhatsApp redirect with ad attribution via ref: + Meta Pixel (no Lead on click). */
 
-import { trackMetaCapiEvent } from "@/lib/api/meta.functions";
 import {
-  CONTENT_NAME,
   ensureFbcFromFbclid,
   ensurePixel,
-  getFbIds,
   newEventId,
   trackViewContent,
   trackWhatsAppCta,
@@ -59,45 +56,9 @@ export function initLandingPixel(): void {
   trackViewContent();
 }
 
-async function sendCapiLead(eventId: string): Promise<void> {
-  if (typeof window === "undefined") return;
-  const { fbp, fbc } = getFbIds();
-  const customData = adCustomData(window.location.search);
-
-  const data: {
-    eventId: string;
-    eventName: "Lead";
-    contentName: string;
-    eventSourceUrl: string;
-    userAgent: string;
-    customData: Record<string, string>;
-    fbp?: string;
-    fbc?: string;
-  } = {
-    eventId,
-    eventName: "Lead",
-    contentName: CONTENT_NAME,
-    eventSourceUrl: window.location.href.split("#")[0],
-    userAgent: navigator.userAgent,
-    customData,
-  };
-  if (fbp) data.fbp = fbp;
-  if (fbc) data.fbc = fbc;
-
-  try {
-    await Promise.race([
-      trackMetaCapiEvent({ data }),
-      new Promise<void>((resolve) => {
-        window.setTimeout(resolve, 1200);
-      }),
-    ]);
-  } catch {
-    // Don't block WhatsApp on CAPI failure
-  }
-}
-
 /**
- * Pixel Lead/Contact/WhatsAppClick + CAPI Lead (same event_id) → open WA with ref.
+ * Pixel Contact/WhatsAppClick (NOT Lead) → open WA with ref.
+ * Meta Lead is sent by the bot via CAPI after the first WhatsApp message.
  */
 export async function openWhatsAppAccess(): Promise<void> {
   if (typeof window === "undefined") return;
@@ -106,13 +67,7 @@ export async function openWhatsAppAccess(): Promise<void> {
   ensurePixel();
 
   const eventId = newEventId("za");
-  const extra = adCustomData(window.location.search);
-
-  // Browser Pixel first (queued even if fbevents still loading)
-  trackWhatsAppCta(eventId, extra);
-
-  // Server CAPI with identical event_id for dedup
-  await sendCapiLead(eventId);
+  trackWhatsAppCta(eventId, adCustomData(window.location.search));
 
   window.location.href = buildWaUrl(window.location.search);
 }

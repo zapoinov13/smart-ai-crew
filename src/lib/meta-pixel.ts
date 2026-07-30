@@ -130,11 +130,11 @@ export function trackWhatsAppClick(eventId: string, extra: Record<string, string
 }
 
 /**
- * CTA bundle: Contact + Lead + WhatsAppClick with shared event id for CAPI dedup.
+ * CTA: Contact + WhatsAppClick only.
+ * Lead fires via CAPI after WhatsApp bot activation (first message).
  */
 export function trackWhatsAppCta(eventId: string, extra: Record<string, string> = {}) {
   ensureFbcFromFbclid();
   trackMetaContact(eventId, extra);
-  trackMetaLead(eventId, extra);
   trackWhatsAppClick(eventId, extra);
 }
