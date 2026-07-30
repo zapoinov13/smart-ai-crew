@@ -64,23 +64,32 @@ async function sendCapiLead(eventId: string): Promise<void> {
   const { fbp, fbc } = getFbIds();
   const customData = adCustomData(window.location.search);
 
-  const payload = {
-    data: {
-      eventId,
-      eventName: "Lead" as const,
-      contentName: CONTENT_NAME,
-      eventSourceUrl: window.location.href,
-      fbp,
-      fbc,
-      userAgent: navigator.userAgent,
-      customData,
-    },
+  const data: {
+    eventId: string;
+    eventName: "Lead";
+    contentName: string;
+    eventSourceUrl: string;
+    userAgent: string;
+    customData: Record<string, string>;
+    fbp?: string;
+    fbc?: string;
+  } = {
+    eventId,
+    eventName: "Lead",
+    contentName: CONTENT_NAME,
+    eventSourceUrl: window.location.href.split("#")[0],
+    userAgent: navigator.userAgent,
+    customData,
   };
+  if (fbp) data.fbp = fbp;
+  if (fbc) data.fbc = fbc;
 
   try {
     await Promise.race([
-      trackMetaCapiEvent(payload),
-      new Promise((resolve) => window.setTimeout(resolve, 1500)),
+      trackMetaCapiEvent({ data }),
+      new Promise<void>((resolve) => {
+        window.setTimeout(resolve, 1200);
+      }),
     ]);
   } catch {
     // Don't block WhatsApp on CAPI failure

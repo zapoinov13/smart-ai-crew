@@ -10,34 +10,42 @@ const eventInputSchema = z.object({
   eventName: z.enum(["Lead", "Contact"]).default("Lead"),
   contentName: z.string().min(1),
   eventSourceUrl: z.string().url(),
-  fbp: z.string().optional(),
-  fbc: z.string().optional(),
-  userAgent: z.string().optional(),
-  customData: z.record(z.union([z.string(), z.number()])).optional(),
+  fbp: z.string().nullish(),
+  fbc: z.string().nullish(),
+  userAgent: z.string().nullish(),
+  customData: z.record(z.string(), z.union([z.string(), z.number()])).optional(),
 });
 
 export const trackMetaCapiEvent = createServerFn({ method: "POST" })
   .inputValidator(eventInputSchema)
   .handler(async ({ data }) => {
-    const { metaPixelId, metaCapiAccessToken } = getServerConfig();
+    try {
+      const { metaPixelId, metaCapiAccessToken } = getServerConfig();
 
-    if (!metaCapiAccessToken) {
-      return { ok: false as const, reason: "missing_token" as const };
+      if (!metaCapiAccessToken) {
+        return { ok: false as const, reason: "missing_token" as const };
+      }
+
+      const result = await sendMetaCapiEvent({
+        pixelId: metaPixelId,
+        accessToken: metaCapiAccessToken,
+        eventName: data.eventName,
+        eventId: data.eventId,
+        eventSourceUrl: data.eventSourceUrl,
+        contentName: data.contentName,
+        clientIpAddress: getRequestIP({ xForwardedFor: true }) ?? undefined,
+        clientUserAgent: data.userAgent ?? getRequestHeader("user-agent") ?? undefined,
+        fbp: data.fbp,
+        fbc: data.fbc,
+        customData: data.customData,
+      });
+
+      return result;
+    } catch (err) {
+      return {
+        ok: false as const,
+        reason: "capi_error" as const,
+        message: err instanceof Error ? err.message : "unknown",
+      };
     }
-
-    const result = await sendMetaCapiEvent({
-      pixelId: metaPixelId,
-      accessToken: metaCapiAccessToken,
-      eventName: data.eventName,
-      eventId: data.eventId,
-      eventSourceUrl: data.eventSourceUrl,
-      contentName: data.contentName,
-      clientIpAddress: getRequestIP({ xForwardedFor: true }) ?? undefined,
-      clientUserAgent: data.userAgent ?? getRequestHeader("user-agent") ?? undefined,
-      fbp: data.fbp,
-      fbc: data.fbc,
-      customData: data.customData,
-    });
-
-    return result;
   });
