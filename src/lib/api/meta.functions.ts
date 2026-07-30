@@ -35,13 +35,14 @@ export const trackMetaCapiEvent = createServerFn({ method: "POST" })
         contentName: data.contentName,
         clientIpAddress: getRequestIP({ xForwardedFor: true }) ?? undefined,
         clientUserAgent: data.userAgent ?? getRequestHeader("user-agent") ?? undefined,
-        fbp: data.fbp,
-        fbc: data.fbc,
+        fbp: data.fbp ?? undefined,
+        fbc: data.fbc ?? undefined,
         customData: data.customData,
       });
 
       return result;
     } catch (err) {
+      console.error("[meta-capi]", err instanceof Error ? err.message : err);
       return {
         ok: false as const,
         reason: "capi_error" as const,
