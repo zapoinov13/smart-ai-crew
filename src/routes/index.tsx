@@ -1,10 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import yuriPhoto from "@/assets/yuri.webp";
-import {
-  captureAttribution,
-  openWhatsAppAccess,
-} from "@/lib/wa-registration";
+import { openWhatsAppAccess } from "@/lib/wa-redirect";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -13,23 +10,14 @@ export const Route = createFileRoute("/")({
 function Index() {
   const [busy, setBusy] = useState(false);
 
-  useEffect(() => {
-    captureAttribution();
-  }, []);
-
-  const onCta = async () => {
+  const onCta = () => {
     if (busy) return;
     setBusy(true);
-    try {
-      await openWhatsAppAccess();
-    } finally {
-      window.setTimeout(() => setBusy(false), 1500);
-    }
+    openWhatsAppAccess();
   };
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-hero-radial font-sans text-white antialiased">
-      {/* Grid overlay */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-[0.07]"
@@ -43,7 +31,6 @@ function Index() {
       />
 
       <div className="relative mx-auto flex min-h-screen w-full max-w-[440px] flex-col px-5 pt-5 pb-8">
-        {/* Top bar */}
         <div className="relative flex items-start justify-end pt-1">
           <div className="flex items-center gap-1.5 rounded-full bg-white/5 px-2.5 py-1 ring-1 ring-white/10">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
@@ -53,7 +40,6 @@ function Index() {
           </div>
         </div>
 
-        {/* Kicker */}
         <div className="mt-7 flex justify-center gap-1.5">
           <span className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[9.5px] font-semibold uppercase tracking-[0.18em] text-white/70">
             Бесплатно
@@ -63,11 +49,12 @@ function Index() {
           </span>
         </div>
 
-        {/* Headline */}
         <h1 className="mt-4 text-center font-sans text-[32px] font-extrabold leading-[1.02] tracking-tight text-white">
           Создай своё первое
           <br />
-          <span className="whitespace-nowrap"><span className="text-gradient-indigo">приложение</span> за вечер</span>
+          <span className="whitespace-nowrap">
+            <span className="text-gradient-indigo">приложение</span> за вечер
+          </span>
         </h1>
 
         <p className="mx-auto mt-3 max-w-[340px] whitespace-pre-line text-center font-sans text-[16px] font-semibold leading-snug text-white">
@@ -102,7 +89,6 @@ function Index() {
           </p>
         </div>
 
-        {/* Portrait */}
         <div className="relative mx-auto mt-6 w-[240px]">
           <div className="relative overflow-hidden rounded-[28px] ring-1 ring-white/10">
             <img
@@ -124,7 +110,6 @@ function Index() {
           </div>
         </div>
 
-        {/* Value bullets */}
         <ul className="mt-7 grid grid-cols-2 gap-2 text-[11.5px] leading-tight">
           {[
             ["Сайты", "за 5 минут"],
@@ -149,7 +134,6 @@ function Index() {
           ))}
         </ul>
 
-        {/* CTA → WhatsApp + Lead */}
         <button
           type="button"
           onClick={onCta}
@@ -160,19 +144,26 @@ function Index() {
             {busy ? "Открываю WhatsApp…" : "Занять место бесплатно"}
           </span>
           <span className="relative grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#E8FF3A]">
-            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="#1E3AFF" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              viewBox="0 0 24 24"
+              className="h-4 w-4"
+              fill="none"
+              stroke="#1E3AFF"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <path d="M9 6l6 6-6 6" />
             </svg>
           </span>
         </button>
 
-        {/* Scarcity */}
         <div className="mt-3 flex items-center justify-center gap-2 whitespace-pre-line text-center text-[11px] text-white/70">
           <span className="h-2 w-2 rounded-full bg-rose-400" />
-          Осталось{"\n"}<span className="font-display font-extrabold text-white">7&nbsp;мест</span>
+          Осталось{"\n"}
+          <span className="font-display font-extrabold text-white">7&nbsp;мест</span>
         </div>
 
-        {/* Price row */}
         <div className="mt-4 flex items-center justify-center gap-3">
           <span className="font-display text-[18px] font-bold text-white/40 line-through decoration-white/40">
             $150
