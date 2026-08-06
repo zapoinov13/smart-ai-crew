@@ -9,7 +9,7 @@ import {
 } from "@/lib/meta-pixel";
 
 export const SITE = "zapoinovai";
-export const WA_PHONE = "77776290913";
+export const WA_PHONE = "77472842595";
 
 /** Build `ref:zapoinovai[.cid][.asid][.adid]` from URL params. */
 export function buildAdRef(search = typeof window !== "undefined" ? window.location.search : ""): string {
@@ -21,7 +21,7 @@ export function buildAdRef(search = typeof window !== "undefined" ? window.locat
 }
 
 export function buildWaAccessText(search?: string): string {
-  return `Хочу получить доступ\n${buildAdRef(search)}`;
+  return `Хочу научится создавать приложения с помощью AI\n${buildAdRef(search)}`;
 }
 
 export function buildWaUrl(search?: string): string {
